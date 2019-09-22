@@ -1,8 +1,8 @@
-parser: lexer.l
+parse: lexer.l parser.y
+	bison -d parser.y
 	flex lexer.l
-	g++ lex.yy.c -lfl -o Output;
-	echo '-------------------'
-	./Output $(file)
+	g++ -o parser lex.yy.c parser.tab.c -lfl
+	echo '----------------------'
 
 clean:
-	rm lex.yy.c Output
+	rm lex.yy.c parser.tab.c parser.tab.h
