@@ -39,10 +39,10 @@ AssignedOrEmpty: ASGN Expression
 	;
 
 ArrayName: ID OS Expression CS
-	| ID OS Expression CS OS Expression CS
+	| ID OS Expression OS CS Expression CS
 	;
 
-Functions: NL
+Functions: Function
 	| Function NL Functions
 	;
 
@@ -74,42 +74,45 @@ Vardec: ARRAY VARTYPE ID
 
 Loop: ForLoop | WhileLoop;
 
-ForLoop: FOR OC Declaration CC SCOMMA Condition SCOMMA Change CC OF Codes CF;
+ForLoop: FOR OC Declaration CC SCOMMA Expression SCOMMA Expression CC OF Codes CF;
 
-WhileLoop: WHILE OC Condition CC OF Codes CF;
+WhileLoop: WHILE OC Expression CC OF Codes CF;
 
 Declaration: Location '=' Expression;
 
-Expression: Location
-	| MethodCall
-	| Literal
-	| Expression BinaryOp Expression
-	| TernaryOp
-	| '-' Expression
-	| NOT Expression
-	| OC Expression CC
+Expression: Location Expres
+	| MethodCall Expres
+	| Literal Expres
+	| TernaryOp Expres
+	| '-' Expression Expres
+	| NOT Expression Expres
+	| OC Expression CC Expres
 	;
 
-Location: ID
-	| ID Expression
-	| ID OS  Expression CS
-	| ID OS  Expression CS OS Expression CS
-	;
+Expres:
+	| BinaryOp Expression Expres
+ 	;
 
+Location: ID LocationPrime ;
 
-Condition:
+LocationPrime:
 	| Expression
+	| OS Expression CS LocationPrimePrime
+	;
+
+LocationPrimePrime: OS Expression CS
+	|
 	;
 
 IfDec: IfBlock ElifBlock ElseBlock;
 
-IfBlock: IF OC Condition CC OF Codes CF;
+IfBlock: IF OC Expression CC OF Codes CF;
 
 ElifBlock: /*epsilon*/
 	| ElifPiece ElifBlock
 	;
 
-ElifPiece : ELIF OC Condition CC OF Codes CF;
+ElifPiece : ELIF OC Expression CC OF Codes CF;
 
 ElseBlock: /*epsilon*/
 	| ELSE OF Codes CF
@@ -132,20 +135,18 @@ BinaryOp: RELOP
 	| BOOLOP
 	;
 
-TernaryOp: Condition '?' Expression ':' Expression;
+TernaryOp: Expression '?' Expression ':' Expression;
 
 ReturnBlock: RETURN ParamList;
 
 MultipleAssignment: VarList ASGN MethodCall;
 
-VarList:
-	Location |
-	Location COMMA VarList
+VarList: Location COMMA Location LocComaLoc;
+
+LocComaLoc: COMMA Location LocComaLoc
+	|
 	;
 
-Change: Location ASGN Expression
-	| /*epsilon*/
-	;
 %%
 
 void yyerror(const char *s)
