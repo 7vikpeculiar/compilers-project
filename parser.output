@@ -1,23 +1,19 @@
 Terminals unused in grammar
 
+   RETURN
    BREAK
-
-
-State 40 conflicts: 2 shift/reduce
-State 45 conflicts: 3 shift/reduce
-State 46 conflicts: 3 shift/reduce
-State 47 conflicts: 3 shift/reduce
-State 48 conflicts: 3 shift/reduce
-State 53 conflicts: 4 shift/reduce
-State 57 conflicts: 1 shift/reduce
-State 59 conflicts: 4 shift/reduce
-State 74 conflicts: 3 shift/reduce
-State 75 conflicts: 1 shift/reduce
-State 80 conflicts: 4 shift/reduce
-State 84 conflicts: 1 shift/reduce
-State 86 conflicts: 1 shift/reduce
-State 91 conflicts: 1 shift/reduce
-State 113 conflicts: 1 shift/reduce
+   IF
+   ELIF
+   ELSE
+   FOR
+   WHILE
+   ARITOP
+   BOOLOP
+   NOT
+   RELOP
+   SCOMMA
+   BOOL
+   CHAR
 
 
 Grammar
@@ -28,234 +24,108 @@ Grammar
     2     | GlobalDecs Functions
     3     | Functions
 
-    4 Imports: Import NL
-    5        | Import Imports NL
+    4 Imports: IMPORT ID Imports
+    5        | NL
 
-    6 Import: IMPORT ID
+    6 GlobalDecs: GlobalDec NL
+    7           | GlobalDecs GlobalDec NL
 
-    7 GlobalDecs: GlobalDec NL
-    8           | GlobalDecs GlobalDec NL
+    8 GlobalDec: ARRAY VARTYPE ID OS INTL OneDorTwoD
+    9          | VARTYPE ID AssignedOrEmpty
 
-    9 GlobalDec: ARRAY VARTYPE ArrayName
-   10          | VARTYPE ID AssignedOrEmpty
+   10 AssignedOrEmpty: ASGN Expression NL
+   11                | NL
 
-   11 AssignedOrEmpty: ASGN Expression
-   12                | %empty
+   12 OneDorTwoD: CS NL
+   13           | COMMA INTL CS NL
 
-   13 ArrayName: ID OS Expression CS
-   14          | ID OS Expression OS CS Expression CS
+   14 Functions: Function
+   15          | Function NL Functions
 
-   15 Functions: Function
-   16          | Function NL Functions
+   16 Function: DEF ID OC FunctionPrime
 
-   17 Function: DEF ID OC ArgList CC OF Codes CF
+   17 FunctionPrime: ArgList NL OF Codes CF NL
 
-   18 Codes: %empty
-   19      | Codes Code
+   18 Codes: NL
 
-   20 ArgList: %empty
-   21        | Argument
-   22        | Argument COMMA ArgList
+   19 ArgList: CC
+   20        | Argument ArgListPrime
+
+   21 ArgListPrime: COMMA ArgListPrime
+   22             | CC
 
    23 Argument: VARTYPE ID
 
-   24 Code: Loop
-   25     | IfDec
-   26     | Vardec
-   27     | MethodCall
-   28     | ReturnBlock
-   29     | MultipleAssignment
-
-   30 Vardec: ARRAY VARTYPE ID
-   31       | VARTYPE ID
-   32       | VARTYPE ID ASGN Expression
-
-   33 Loop: ForLoop
-   34     | WhileLoop
-
-   35 ForLoop: FOR OC Declaration CC SCOMMA Expression SCOMMA Expression CC OF Codes CF
-
-   36 WhileLoop: WHILE OC Expression CC OF Codes CF
-
-   37 Declaration: Location '=' Expression
-
-   38 Expression: Location Expres
-   39           | MethodCall Expres
-   40           | Literal Expres
-   41           | TernaryOp Expres
-   42           | '-' Expression Expres
-   43           | NOT Expression Expres
-   44           | OC Expression CC Expres
-
-   45 Expres: %empty
-   46       | BinaryOp Expression Expres
-
-   47 Location: ID LocationPrime
-
-   48 LocationPrime: %empty
-   49              | Expression
-   50              | OS Expression CS LocationPrimePrime
-
-   51 LocationPrimePrime: OS Expression CS
-   52                   | %empty
-
-   53 IfDec: IfBlock ElifBlock ElseBlock
-
-   54 IfBlock: IF OC Expression CC OF Codes CF
-
-   55 ElifBlock: %empty
-   56          | ElifPiece ElifBlock
-
-   57 ElifPiece: ELIF OC Expression CC OF Codes CF
-
-   58 ElseBlock: %empty
-   59          | ELSE OF Codes CF
-
-   60 MethodCall: ID OC ParamList CC
-
-   61 ParamList: Expression ',' ParamList
-   62          | Expression
-   63          | %empty
-
-   64 Literal: INTL
-   65        | BOOL
-   66        | CHAR
-
-   67 BinaryOp: RELOP
-   68         | ARITOP
-   69         | BOOLOP
-
-   70 TernaryOp: Expression '?' Expression ':' Expression
-
-   71 ReturnBlock: RETURN ParamList
-
-   72 MultipleAssignment: VarList ASGN MethodCall
-
-   73 VarList: Location COMMA Location LocComaLoc
-
-   74 LocComaLoc: COMMA Location LocComaLoc
-   75           | %empty
+   24 Expression: INTL
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-',' (44) 61
-'-' (45) 42
-':' (58) 70
-'=' (61) 37
-'?' (63) 70
 error (256)
-NL (258) 4 5 7 8 16
-ARRAY (259) 9 30
-RETURN (260) 71
-BREAK (261)
-IMPORT (262) 6
-IF (263) 54
-ELIF (264) 57
-ELSE (265) 59
-FOR (266) 35
-WHILE (267) 36
-DEF (268) 17
-ARITOP (269) 68
-BOOLOP (270) 69
-NOT (271) 43
-RELOP (272) 67
-ASGN (273) 11 32 72
-SCOMMA (274) 35
-COMMA (275) 22 73 74
-VARTYPE (276) 9 10 23 30 31 32
-BOOL (277) 65
-OF (278) 17 35 36 54 57 59
-CF (279) 17 35 36 54 57 59
-OC (280) 17 35 36 44 54 57 60
-CC (281) 17 35 36 44 54 57 60
-OS (282) 13 14 50 51
-CS (283) 13 14 50 51
-ID (284) 6 10 13 14 17 23 30 31 32 47 60
-CHAR (285) 66
-INTL (286) 64
+ARRAY (258) 8
+RETURN (259)
+BREAK (260)
+IMPORT (261) 4
+IF (262)
+ELIF (263)
+ELSE (264)
+FOR (265)
+WHILE (266)
+DEF (267) 16
+ARITOP (268)
+BOOLOP (269)
+NOT (270)
+RELOP (271)
+ASGN (272) 10
+SCOMMA (273)
+COMMA (274) 13 21
+VARTYPE (275) 8 9 23
+BOOL (276)
+OF (277) 17
+CF (278) 17
+OC (279) 16
+CC (280) 19 22
+OS (281) 8
+CS (282) 12 13
+ID (283) 4 8 9 16 23
+CHAR (284)
+INTL (285) 8 13 24
+NL (286) 5 6 7 10 11 12 13 15 17 18
 
 
 Nonterminals, with rules where they appear
 
-$accept (37)
+$accept (32)
     on left: 0
-File (38)
+File (33)
     on left: 1 2 3, on right: 0
-Imports (39)
-    on left: 4 5, on right: 1 5
-Import (40)
-    on left: 6, on right: 4 5
-GlobalDecs (41)
-    on left: 7 8, on right: 1 2 8
-GlobalDec (42)
-    on left: 9 10, on right: 7 8
-AssignedOrEmpty (43)
-    on left: 11 12, on right: 10
-ArrayName (44)
-    on left: 13 14, on right: 9
-Functions (45)
-    on left: 15 16, on right: 1 2 3 16
-Function (46)
-    on left: 17, on right: 15 16
-Codes (47)
-    on left: 18 19, on right: 17 19 35 36 54 57 59
-ArgList (48)
-    on left: 20 21 22, on right: 17 22
-Argument (49)
-    on left: 23, on right: 21 22
-Code (50)
-    on left: 24 25 26 27 28 29, on right: 19
-Vardec (51)
-    on left: 30 31 32, on right: 26
-Loop (52)
-    on left: 33 34, on right: 24
-ForLoop (53)
-    on left: 35, on right: 33
-WhileLoop (54)
-    on left: 36, on right: 34
-Declaration (55)
-    on left: 37, on right: 35
-Expression (56)
-    on left: 38 39 40 41 42 43 44, on right: 11 13 14 32 35 36 37 42
-    43 44 46 49 50 51 54 57 61 62 70
-Expres (57)
-    on left: 45 46, on right: 38 39 40 41 42 43 44 46
-Location (58)
-    on left: 47, on right: 37 38 73 74
-LocationPrime (59)
-    on left: 48 49 50, on right: 47
-LocationPrimePrime (60)
-    on left: 51 52, on right: 50
-IfDec (61)
-    on left: 53, on right: 25
-IfBlock (62)
-    on left: 54, on right: 53
-ElifBlock (63)
-    on left: 55 56, on right: 53 56
-ElifPiece (64)
-    on left: 57, on right: 56
-ElseBlock (65)
-    on left: 58 59, on right: 53
-MethodCall (66)
-    on left: 60, on right: 27 39 72
-ParamList (67)
-    on left: 61 62 63, on right: 60 61 71
-Literal (68)
-    on left: 64 65 66, on right: 40
-BinaryOp (69)
-    on left: 67 68 69, on right: 46
-TernaryOp (70)
-    on left: 70, on right: 41
-ReturnBlock (71)
-    on left: 71, on right: 28
-MultipleAssignment (72)
-    on left: 72, on right: 29
-VarList (73)
-    on left: 73, on right: 72
-LocComaLoc (74)
-    on left: 74 75, on right: 73 74
+Imports (34)
+    on left: 4 5, on right: 1 4
+GlobalDecs (35)
+    on left: 6 7, on right: 1 2 7
+GlobalDec (36)
+    on left: 8 9, on right: 6 7
+AssignedOrEmpty (37)
+    on left: 10 11, on right: 9
+OneDorTwoD (38)
+    on left: 12 13, on right: 8
+Functions (39)
+    on left: 14 15, on right: 1 2 3 15
+Function (40)
+    on left: 16, on right: 14 15
+FunctionPrime (41)
+    on left: 17, on right: 16
+Codes (42)
+    on left: 18, on right: 17
+ArgList (43)
+    on left: 19 20, on right: 17
+ArgListPrime (44)
+    on left: 21 22, on right: 20 21
+Argument (45)
+    on left: 23, on right: 20
+Expression (46)
+    on left: 24, on right: 10
 
 
 State 0
@@ -266,10 +136,10 @@ State 0
     IMPORT   shift, and go to state 2
     DEF      shift, and go to state 3
     VARTYPE  shift, and go to state 4
+    NL       shift, and go to state 5
 
-    File        go to state 5
-    Imports     go to state 6
-    Import      go to state 7
+    File        go to state 6
+    Imports     go to state 7
     GlobalDecs  go to state 8
     GlobalDec   go to state 9
     Functions   go to state 10
@@ -278,40 +148,47 @@ State 0
 
 State 1
 
-    9 GlobalDec: ARRAY . VARTYPE ArrayName
+    8 GlobalDec: ARRAY . VARTYPE ID OS INTL OneDorTwoD
 
     VARTYPE  shift, and go to state 12
 
 
 State 2
 
-    6 Import: IMPORT . ID
+    4 Imports: IMPORT . ID Imports
 
     ID  shift, and go to state 13
 
 
 State 3
 
-   17 Function: DEF . ID OC ArgList CC OF Codes CF
+   16 Function: DEF . ID OC FunctionPrime
 
     ID  shift, and go to state 14
 
 
 State 4
 
-   10 GlobalDec: VARTYPE . ID AssignedOrEmpty
+    9 GlobalDec: VARTYPE . ID AssignedOrEmpty
 
     ID  shift, and go to state 15
 
 
 State 5
 
+    5 Imports: NL .
+
+    $default  reduce using rule 5 (Imports)
+
+
+State 6
+
     0 $accept: File . $end
 
     $end  shift, and go to state 16
 
 
-State 6
+State 7
 
     1 File: Imports . GlobalDecs Functions
 
@@ -322,37 +199,25 @@ State 6
     GlobalDec   go to state 9
 
 
-State 7
-
-    4 Imports: Import . NL
-    5        | Import . Imports NL
-
-    NL      shift, and go to state 18
-    IMPORT  shift, and go to state 2
-
-    Imports  go to state 19
-    Import   go to state 7
-
-
 State 8
 
     2 File: GlobalDecs . Functions
-    8 GlobalDecs: GlobalDecs . GlobalDec NL
+    7 GlobalDecs: GlobalDecs . GlobalDec NL
 
     ARRAY    shift, and go to state 1
     DEF      shift, and go to state 3
     VARTYPE  shift, and go to state 4
 
-    GlobalDec  go to state 20
-    Functions  go to state 21
+    GlobalDec  go to state 18
+    Functions  go to state 19
     Function   go to state 11
 
 
 State 9
 
-    7 GlobalDecs: GlobalDec . NL
+    6 GlobalDecs: GlobalDec . NL
 
-    NL  shift, and go to state 22
+    NL  shift, and go to state 20
 
 
 State 10
@@ -364,46 +229,46 @@ State 10
 
 State 11
 
-   15 Functions: Function .
-   16          | Function . NL Functions
+   14 Functions: Function .
+   15          | Function . NL Functions
 
-    NL  shift, and go to state 23
+    NL  shift, and go to state 21
 
-    $default  reduce using rule 15 (Functions)
+    $default  reduce using rule 14 (Functions)
 
 
 State 12
 
-    9 GlobalDec: ARRAY VARTYPE . ArrayName
+    8 GlobalDec: ARRAY VARTYPE . ID OS INTL OneDorTwoD
 
-    ID  shift, and go to state 24
-
-    ArrayName  go to state 25
+    ID  shift, and go to state 22
 
 
 State 13
 
-    6 Import: IMPORT ID .
+    4 Imports: IMPORT ID . Imports
 
-    $default  reduce using rule 6 (Import)
+    IMPORT  shift, and go to state 2
+    NL      shift, and go to state 5
+
+    Imports  go to state 23
 
 
 State 14
 
-   17 Function: DEF ID . OC ArgList CC OF Codes CF
+   16 Function: DEF ID . OC FunctionPrime
 
-    OC  shift, and go to state 26
+    OC  shift, and go to state 24
 
 
 State 15
 
-   10 GlobalDec: VARTYPE ID . AssignedOrEmpty
+    9 GlobalDec: VARTYPE ID . AssignedOrEmpty
 
-    ASGN  shift, and go to state 27
+    ASGN  shift, and go to state 25
+    NL    shift, and go to state 26
 
-    $default  reduce using rule 12 (AssignedOrEmpty)
-
-    AssignedOrEmpty  go to state 28
+    AssignedOrEmpty  go to state 27
 
 
 State 16
@@ -416,1763 +281,320 @@ State 16
 State 17
 
     1 File: Imports GlobalDecs . Functions
-    8 GlobalDecs: GlobalDecs . GlobalDec NL
+    7 GlobalDecs: GlobalDecs . GlobalDec NL
 
     ARRAY    shift, and go to state 1
     DEF      shift, and go to state 3
     VARTYPE  shift, and go to state 4
 
-    GlobalDec  go to state 20
-    Functions  go to state 29
+    GlobalDec  go to state 18
+    Functions  go to state 28
     Function   go to state 11
 
 
 State 18
 
-    4 Imports: Import NL .
+    7 GlobalDecs: GlobalDecs GlobalDec . NL
 
-    $default  reduce using rule 4 (Imports)
+    NL  shift, and go to state 29
 
 
 State 19
-
-    5 Imports: Import Imports . NL
-
-    NL  shift, and go to state 30
-
-
-State 20
-
-    8 GlobalDecs: GlobalDecs GlobalDec . NL
-
-    NL  shift, and go to state 31
-
-
-State 21
 
     2 File: GlobalDecs Functions .
 
     $default  reduce using rule 2 (File)
 
 
+State 20
+
+    6 GlobalDecs: GlobalDec NL .
+
+    $default  reduce using rule 6 (GlobalDecs)
+
+
+State 21
+
+   15 Functions: Function NL . Functions
+
+    DEF  shift, and go to state 3
+
+    Functions  go to state 30
+    Function   go to state 11
+
+
 State 22
 
-    7 GlobalDecs: GlobalDec NL .
+    8 GlobalDec: ARRAY VARTYPE ID . OS INTL OneDorTwoD
 
-    $default  reduce using rule 7 (GlobalDecs)
+    OS  shift, and go to state 31
 
 
 State 23
 
-   16 Functions: Function NL . Functions
+    4 Imports: IMPORT ID Imports .
 
-    DEF  shift, and go to state 3
-
-    Functions  go to state 32
-    Function   go to state 11
+    $default  reduce using rule 4 (Imports)
 
 
 State 24
 
-   13 ArrayName: ID . OS Expression CS
-   14          | ID . OS Expression OS CS Expression CS
+   16 Function: DEF ID OC . FunctionPrime
 
-    OS  shift, and go to state 33
+    VARTYPE  shift, and go to state 32
+    CC       shift, and go to state 33
+
+    FunctionPrime  go to state 34
+    ArgList        go to state 35
+    Argument       go to state 36
 
 
 State 25
 
-    9 GlobalDec: ARRAY VARTYPE ArrayName .
+   10 AssignedOrEmpty: ASGN . Expression NL
 
-    $default  reduce using rule 9 (GlobalDec)
+    INTL  shift, and go to state 37
+
+    Expression  go to state 38
 
 
 State 26
 
-   17 Function: DEF ID OC . ArgList CC OF Codes CF
+   11 AssignedOrEmpty: NL .
 
-    VARTYPE  shift, and go to state 34
-
-    $default  reduce using rule 20 (ArgList)
-
-    ArgList   go to state 35
-    Argument  go to state 36
+    $default  reduce using rule 11 (AssignedOrEmpty)
 
 
 State 27
 
-   11 AssignedOrEmpty: ASGN . Expression
+    9 GlobalDec: VARTYPE ID AssignedOrEmpty .
 
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 44
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
+    $default  reduce using rule 9 (GlobalDec)
 
 
 State 28
-
-   10 GlobalDec: VARTYPE ID AssignedOrEmpty .
-
-    $default  reduce using rule 10 (GlobalDec)
-
-
-State 29
 
     1 File: Imports GlobalDecs Functions .
 
     $default  reduce using rule 1 (File)
 
 
+State 29
+
+    7 GlobalDecs: GlobalDecs GlobalDec NL .
+
+    $default  reduce using rule 7 (GlobalDecs)
+
+
 State 30
 
-    5 Imports: Import Imports NL .
+   15 Functions: Function NL Functions .
 
-    $default  reduce using rule 5 (Imports)
+    $default  reduce using rule 15 (Functions)
 
 
 State 31
 
-    8 GlobalDecs: GlobalDecs GlobalDec NL .
+    8 GlobalDec: ARRAY VARTYPE ID OS . INTL OneDorTwoD
 
-    $default  reduce using rule 8 (GlobalDecs)
+    INTL  shift, and go to state 39
 
 
 State 32
 
-   16 Functions: Function NL Functions .
+   23 Argument: VARTYPE . ID
 
-    $default  reduce using rule 16 (Functions)
+    ID  shift, and go to state 40
 
 
 State 33
 
-   13 ArrayName: ID OS . Expression CS
-   14          | ID OS . Expression OS CS Expression CS
+   19 ArgList: CC .
 
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 49
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
+    $default  reduce using rule 19 (ArgList)
 
 
 State 34
 
-   23 Argument: VARTYPE . ID
+   16 Function: DEF ID OC FunctionPrime .
 
-    ID  shift, and go to state 50
+    $default  reduce using rule 16 (Function)
 
 
 State 35
 
-   17 Function: DEF ID OC ArgList . CC OF Codes CF
+   17 FunctionPrime: ArgList . NL OF Codes CF NL
 
-    CC  shift, and go to state 51
+    NL  shift, and go to state 41
 
 
 State 36
 
-   21 ArgList: Argument .
-   22        | Argument . COMMA ArgList
+   20 ArgList: Argument . ArgListPrime
 
-    COMMA  shift, and go to state 52
+    COMMA  shift, and go to state 42
+    CC     shift, and go to state 43
 
-    $default  reduce using rule 21 (ArgList)
+    ArgListPrime  go to state 44
 
 
 State 37
 
-   43 Expression: NOT . Expression Expres
+   24 Expression: INTL .
 
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 53
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
+    $default  reduce using rule 24 (Expression)
 
 
 State 38
 
-   65 Literal: BOOL .
+   10 AssignedOrEmpty: ASGN Expression . NL
 
-    $default  reduce using rule 65 (Literal)
+    NL  shift, and go to state 45
 
 
 State 39
 
-   44 Expression: OC . Expression CC Expres
+    8 GlobalDec: ARRAY VARTYPE ID OS INTL . OneDorTwoD
 
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
+    COMMA  shift, and go to state 46
+    CS     shift, and go to state 47
 
-    Expression  go to state 54
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
+    OneDorTwoD  go to state 48
 
 
 State 40
-
-   47 Location: ID . LocationPrime
-   60 MethodCall: ID . OC ParamList CC
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 55
-    OS    shift, and go to state 56
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    OS        [reduce using rule 48 (LocationPrime)]
-    ID        [reduce using rule 48 (LocationPrime)]
-    $default  reduce using rule 48 (LocationPrime)
-
-    Expression     go to state 57
-    Location       go to state 45
-    LocationPrime  go to state 58
-    MethodCall     go to state 46
-    Literal        go to state 47
-    TernaryOp      go to state 48
-
-
-State 41
-
-   66 Literal: CHAR .
-
-    $default  reduce using rule 66 (Literal)
-
-
-State 42
-
-   64 Literal: INTL .
-
-    $default  reduce using rule 64 (Literal)
-
-
-State 43
-
-   42 Expression: '-' . Expression Expres
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 59
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 44
-
-   11 AssignedOrEmpty: ASGN Expression .
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    '?'  shift, and go to state 60
-
-    $default  reduce using rule 11 (AssignedOrEmpty)
-
-
-State 45
-
-   38 Expression: Location . Expres
-
-    ARITOP  shift, and go to state 61
-    BOOLOP  shift, and go to state 62
-    RELOP   shift, and go to state 63
-
-    ARITOP    [reduce using rule 45 (Expres)]
-    BOOLOP    [reduce using rule 45 (Expres)]
-    RELOP     [reduce using rule 45 (Expres)]
-    $default  reduce using rule 45 (Expres)
-
-    Expres    go to state 64
-    BinaryOp  go to state 65
-
-
-State 46
-
-   39 Expression: MethodCall . Expres
-
-    ARITOP  shift, and go to state 61
-    BOOLOP  shift, and go to state 62
-    RELOP   shift, and go to state 63
-
-    ARITOP    [reduce using rule 45 (Expres)]
-    BOOLOP    [reduce using rule 45 (Expres)]
-    RELOP     [reduce using rule 45 (Expres)]
-    $default  reduce using rule 45 (Expres)
-
-    Expres    go to state 66
-    BinaryOp  go to state 65
-
-
-State 47
-
-   40 Expression: Literal . Expres
-
-    ARITOP  shift, and go to state 61
-    BOOLOP  shift, and go to state 62
-    RELOP   shift, and go to state 63
-
-    ARITOP    [reduce using rule 45 (Expres)]
-    BOOLOP    [reduce using rule 45 (Expres)]
-    RELOP     [reduce using rule 45 (Expres)]
-    $default  reduce using rule 45 (Expres)
-
-    Expres    go to state 67
-    BinaryOp  go to state 65
-
-
-State 48
-
-   41 Expression: TernaryOp . Expres
-
-    ARITOP  shift, and go to state 61
-    BOOLOP  shift, and go to state 62
-    RELOP   shift, and go to state 63
-
-    ARITOP    [reduce using rule 45 (Expres)]
-    BOOLOP    [reduce using rule 45 (Expres)]
-    RELOP     [reduce using rule 45 (Expres)]
-    $default  reduce using rule 45 (Expres)
-
-    Expres    go to state 68
-    BinaryOp  go to state 65
-
-
-State 49
-
-   13 ArrayName: ID OS Expression . CS
-   14          | ID OS Expression . OS CS Expression CS
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    OS   shift, and go to state 69
-    CS   shift, and go to state 70
-    '?'  shift, and go to state 60
-
-
-State 50
 
    23 Argument: VARTYPE ID .
 
     $default  reduce using rule 23 (Argument)
 
 
+State 41
+
+   17 FunctionPrime: ArgList NL . OF Codes CF NL
+
+    OF  shift, and go to state 49
+
+
+State 42
+
+   21 ArgListPrime: COMMA . ArgListPrime
+
+    COMMA  shift, and go to state 42
+    CC     shift, and go to state 43
+
+    ArgListPrime  go to state 50
+
+
+State 43
+
+   22 ArgListPrime: CC .
+
+    $default  reduce using rule 22 (ArgListPrime)
+
+
+State 44
+
+   20 ArgList: Argument ArgListPrime .
+
+    $default  reduce using rule 20 (ArgList)
+
+
+State 45
+
+   10 AssignedOrEmpty: ASGN Expression NL .
+
+    $default  reduce using rule 10 (AssignedOrEmpty)
+
+
+State 46
+
+   13 OneDorTwoD: COMMA . INTL CS NL
+
+    INTL  shift, and go to state 51
+
+
+State 47
+
+   12 OneDorTwoD: CS . NL
+
+    NL  shift, and go to state 52
+
+
+State 48
+
+    8 GlobalDec: ARRAY VARTYPE ID OS INTL OneDorTwoD .
+
+    $default  reduce using rule 8 (GlobalDec)
+
+
+State 49
+
+   17 FunctionPrime: ArgList NL OF . Codes CF NL
+
+    NL  shift, and go to state 53
+
+    Codes  go to state 54
+
+
+State 50
+
+   21 ArgListPrime: COMMA ArgListPrime .
+
+    $default  reduce using rule 21 (ArgListPrime)
+
+
 State 51
 
-   17 Function: DEF ID OC ArgList CC . OF Codes CF
+   13 OneDorTwoD: COMMA INTL . CS NL
 
-    OF  shift, and go to state 71
+    CS  shift, and go to state 55
 
 
 State 52
 
-   22 ArgList: Argument COMMA . ArgList
+   12 OneDorTwoD: CS NL .
 
-    VARTYPE  shift, and go to state 34
-
-    $default  reduce using rule 20 (ArgList)
-
-    ArgList   go to state 72
-    Argument  go to state 36
+    $default  reduce using rule 12 (OneDorTwoD)
 
 
 State 53
 
-   43 Expression: NOT Expression . Expres
-   70 TernaryOp: Expression . '?' Expression ':' Expression
+   18 Codes: NL .
 
-    ARITOP  shift, and go to state 61
-    BOOLOP  shift, and go to state 62
-    RELOP   shift, and go to state 63
-    '?'     shift, and go to state 60
-
-    ARITOP    [reduce using rule 45 (Expres)]
-    BOOLOP    [reduce using rule 45 (Expres)]
-    RELOP     [reduce using rule 45 (Expres)]
-    '?'       [reduce using rule 45 (Expres)]
-    $default  reduce using rule 45 (Expres)
-
-    Expres    go to state 73
-    BinaryOp  go to state 65
+    $default  reduce using rule 18 (Codes)
 
 
 State 54
 
-   44 Expression: OC Expression . CC Expres
-   70 TernaryOp: Expression . '?' Expression ':' Expression
+   17 FunctionPrime: ArgList NL OF Codes . CF NL
 
-    CC   shift, and go to state 74
-    '?'  shift, and go to state 60
+    CF  shift, and go to state 56
 
 
 State 55
 
-   44 Expression: OC . Expression CC Expres
-   60 MethodCall: ID OC . ParamList CC
+   13 OneDorTwoD: COMMA INTL CS . NL
 
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    $default  reduce using rule 63 (ParamList)
-
-    Expression  go to state 75
-    Location    go to state 45
-    MethodCall  go to state 46
-    ParamList   go to state 76
-    Literal     go to state 47
-    TernaryOp   go to state 48
+    NL  shift, and go to state 57
 
 
 State 56
 
-   50 LocationPrime: OS . Expression CS LocationPrimePrime
+   17 FunctionPrime: ArgList NL OF Codes CF . NL
 
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 77
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
+    NL  shift, and go to state 58
 
 
 State 57
 
-   49 LocationPrime: Expression .
-   70 TernaryOp: Expression . '?' Expression ':' Expression
+   13 OneDorTwoD: COMMA INTL CS NL .
 
-    '?'  shift, and go to state 60
-
-    '?'       [reduce using rule 49 (LocationPrime)]
-    $default  reduce using rule 49 (LocationPrime)
+    $default  reduce using rule 13 (OneDorTwoD)
 
 
 State 58
 
-   47 Location: ID LocationPrime .
+   17 FunctionPrime: ArgList NL OF Codes CF NL .
 
-    $default  reduce using rule 47 (Location)
-
-
-State 59
-
-   42 Expression: '-' Expression . Expres
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    ARITOP  shift, and go to state 61
-    BOOLOP  shift, and go to state 62
-    RELOP   shift, and go to state 63
-    '?'     shift, and go to state 60
-
-    ARITOP    [reduce using rule 45 (Expres)]
-    BOOLOP    [reduce using rule 45 (Expres)]
-    RELOP     [reduce using rule 45 (Expres)]
-    '?'       [reduce using rule 45 (Expres)]
-    $default  reduce using rule 45 (Expres)
-
-    Expres    go to state 78
-    BinaryOp  go to state 65
-
-
-State 60
-
-   70 TernaryOp: Expression '?' . Expression ':' Expression
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 79
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 61
-
-   68 BinaryOp: ARITOP .
-
-    $default  reduce using rule 68 (BinaryOp)
-
-
-State 62
-
-   69 BinaryOp: BOOLOP .
-
-    $default  reduce using rule 69 (BinaryOp)
-
-
-State 63
-
-   67 BinaryOp: RELOP .
-
-    $default  reduce using rule 67 (BinaryOp)
-
-
-State 64
-
-   38 Expression: Location Expres .
-
-    $default  reduce using rule 38 (Expression)
-
-
-State 65
-
-   46 Expres: BinaryOp . Expression Expres
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 80
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 66
-
-   39 Expression: MethodCall Expres .
-
-    $default  reduce using rule 39 (Expression)
-
-
-State 67
-
-   40 Expression: Literal Expres .
-
-    $default  reduce using rule 40 (Expression)
-
-
-State 68
-
-   41 Expression: TernaryOp Expres .
-
-    $default  reduce using rule 41 (Expression)
-
-
-State 69
-
-   14 ArrayName: ID OS Expression OS . CS Expression CS
-
-    CS  shift, and go to state 81
-
-
-State 70
-
-   13 ArrayName: ID OS Expression CS .
-
-    $default  reduce using rule 13 (ArrayName)
-
-
-State 71
-
-   17 Function: DEF ID OC ArgList CC OF . Codes CF
-
-    $default  reduce using rule 18 (Codes)
-
-    Codes  go to state 82
-
-
-State 72
-
-   22 ArgList: Argument COMMA ArgList .
-
-    $default  reduce using rule 22 (ArgList)
-
-
-State 73
-
-   43 Expression: NOT Expression Expres .
-
-    $default  reduce using rule 43 (Expression)
-
-
-State 74
-
-   44 Expression: OC Expression CC . Expres
-
-    ARITOP  shift, and go to state 61
-    BOOLOP  shift, and go to state 62
-    RELOP   shift, and go to state 63
-
-    ARITOP    [reduce using rule 45 (Expres)]
-    BOOLOP    [reduce using rule 45 (Expres)]
-    RELOP     [reduce using rule 45 (Expres)]
-    $default  reduce using rule 45 (Expres)
-
-    Expres    go to state 83
-    BinaryOp  go to state 65
-
-
-State 75
-
-   44 Expression: OC Expression . CC Expres
-   61 ParamList: Expression . ',' ParamList
-   62          | Expression .
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    CC   shift, and go to state 74
-    ','  shift, and go to state 84
-    '?'  shift, and go to state 60
-
-    CC  [reduce using rule 62 (ParamList)]
-
-
-State 76
-
-   60 MethodCall: ID OC ParamList . CC
-
-    CC  shift, and go to state 85
-
-
-State 77
-
-   50 LocationPrime: OS Expression . CS LocationPrimePrime
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    CS   shift, and go to state 86
-    '?'  shift, and go to state 60
-
-
-State 78
-
-   42 Expression: '-' Expression Expres .
-
-    $default  reduce using rule 42 (Expression)
-
-
-State 79
-
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-   70          | Expression '?' Expression . ':' Expression
-
-    '?'  shift, and go to state 60
-    ':'  shift, and go to state 87
-
-
-State 80
-
-   46 Expres: BinaryOp Expression . Expres
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    ARITOP  shift, and go to state 61
-    BOOLOP  shift, and go to state 62
-    RELOP   shift, and go to state 63
-    '?'     shift, and go to state 60
-
-    ARITOP    [reduce using rule 45 (Expres)]
-    BOOLOP    [reduce using rule 45 (Expres)]
-    RELOP     [reduce using rule 45 (Expres)]
-    '?'       [reduce using rule 45 (Expres)]
-    $default  reduce using rule 45 (Expres)
-
-    Expres    go to state 88
-    BinaryOp  go to state 65
-
-
-State 81
-
-   14 ArrayName: ID OS Expression OS CS . Expression CS
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 89
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 82
-
-   17 Function: DEF ID OC ArgList CC OF Codes . CF
-   19 Codes: Codes . Code
-
-    ARRAY    shift, and go to state 90
-    RETURN   shift, and go to state 91
-    IF       shift, and go to state 92
-    FOR      shift, and go to state 93
-    WHILE    shift, and go to state 94
-    VARTYPE  shift, and go to state 95
-    CF       shift, and go to state 96
-    ID       shift, and go to state 40
-
-    Code                go to state 97
-    Vardec              go to state 98
-    Loop                go to state 99
-    ForLoop             go to state 100
-    WhileLoop           go to state 101
-    Location            go to state 102
-    IfDec               go to state 103
-    IfBlock             go to state 104
-    MethodCall          go to state 105
-    ReturnBlock         go to state 106
-    MultipleAssignment  go to state 107
-    VarList             go to state 108
-
-
-State 83
-
-   44 Expression: OC Expression CC Expres .
-
-    $default  reduce using rule 44 (Expression)
-
-
-State 84
-
-   61 ParamList: Expression ',' . ParamList
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    ID        [reduce using rule 63 (ParamList)]
-    $default  reduce using rule 63 (ParamList)
-
-    Expression  go to state 109
-    Location    go to state 45
-    MethodCall  go to state 46
-    ParamList   go to state 110
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 85
-
-   60 MethodCall: ID OC ParamList CC .
-
-    $default  reduce using rule 60 (MethodCall)
-
-
-State 86
-
-   50 LocationPrime: OS Expression CS . LocationPrimePrime
-
-    OS  shift, and go to state 111
-
-    OS        [reduce using rule 52 (LocationPrimePrime)]
-    $default  reduce using rule 52 (LocationPrimePrime)
-
-    LocationPrimePrime  go to state 112
-
-
-State 87
-
-   70 TernaryOp: Expression '?' Expression ':' . Expression
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 113
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 88
-
-   46 Expres: BinaryOp Expression Expres .
-
-    $default  reduce using rule 46 (Expres)
-
-
-State 89
-
-   14 ArrayName: ID OS Expression OS CS Expression . CS
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    CS   shift, and go to state 114
-    '?'  shift, and go to state 60
-
-
-State 90
-
-   30 Vardec: ARRAY . VARTYPE ID
-
-    VARTYPE  shift, and go to state 115
-
-
-State 91
-
-   71 ReturnBlock: RETURN . ParamList
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    ID        [reduce using rule 63 (ParamList)]
-    $default  reduce using rule 63 (ParamList)
-
-    Expression  go to state 109
-    Location    go to state 45
-    MethodCall  go to state 46
-    ParamList   go to state 116
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 92
-
-   54 IfBlock: IF . OC Expression CC OF Codes CF
-
-    OC  shift, and go to state 117
-
-
-State 93
-
-   35 ForLoop: FOR . OC Declaration CC SCOMMA Expression SCOMMA Expression CC OF Codes CF
-
-    OC  shift, and go to state 118
-
-
-State 94
-
-   36 WhileLoop: WHILE . OC Expression CC OF Codes CF
-
-    OC  shift, and go to state 119
-
-
-State 95
-
-   31 Vardec: VARTYPE . ID
-   32       | VARTYPE . ID ASGN Expression
-
-    ID  shift, and go to state 120
-
-
-State 96
-
-   17 Function: DEF ID OC ArgList CC OF Codes CF .
-
-    $default  reduce using rule 17 (Function)
-
-
-State 97
-
-   19 Codes: Codes Code .
-
-    $default  reduce using rule 19 (Codes)
-
-
-State 98
-
-   26 Code: Vardec .
-
-    $default  reduce using rule 26 (Code)
-
-
-State 99
-
-   24 Code: Loop .
-
-    $default  reduce using rule 24 (Code)
-
-
-State 100
-
-   33 Loop: ForLoop .
-
-    $default  reduce using rule 33 (Loop)
-
-
-State 101
-
-   34 Loop: WhileLoop .
-
-    $default  reduce using rule 34 (Loop)
-
-
-State 102
-
-   73 VarList: Location . COMMA Location LocComaLoc
-
-    COMMA  shift, and go to state 121
-
-
-State 103
-
-   25 Code: IfDec .
-
-    $default  reduce using rule 25 (Code)
-
-
-State 104
-
-   53 IfDec: IfBlock . ElifBlock ElseBlock
-
-    ELIF  shift, and go to state 122
-
-    $default  reduce using rule 55 (ElifBlock)
-
-    ElifBlock  go to state 123
-    ElifPiece  go to state 124
-
-
-State 105
-
-   27 Code: MethodCall .
-
-    $default  reduce using rule 27 (Code)
-
-
-State 106
-
-   28 Code: ReturnBlock .
-
-    $default  reduce using rule 28 (Code)
-
-
-State 107
-
-   29 Code: MultipleAssignment .
-
-    $default  reduce using rule 29 (Code)
-
-
-State 108
-
-   72 MultipleAssignment: VarList . ASGN MethodCall
-
-    ASGN  shift, and go to state 125
-
-
-State 109
-
-   61 ParamList: Expression . ',' ParamList
-   62          | Expression .
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    ','  shift, and go to state 84
-    '?'  shift, and go to state 60
-
-    $default  reduce using rule 62 (ParamList)
-
-
-State 110
-
-   61 ParamList: Expression ',' ParamList .
-
-    $default  reduce using rule 61 (ParamList)
-
-
-State 111
-
-   51 LocationPrimePrime: OS . Expression CS
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 126
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 112
-
-   50 LocationPrime: OS Expression CS LocationPrimePrime .
-
-    $default  reduce using rule 50 (LocationPrime)
-
-
-State 113
-
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-   70          | Expression '?' Expression ':' Expression .
-
-    '?'  shift, and go to state 60
-
-    '?'       [reduce using rule 70 (TernaryOp)]
-    $default  reduce using rule 70 (TernaryOp)
-
-
-State 114
-
-   14 ArrayName: ID OS Expression OS CS Expression CS .
-
-    $default  reduce using rule 14 (ArrayName)
-
-
-State 115
-
-   30 Vardec: ARRAY VARTYPE . ID
-
-    ID  shift, and go to state 127
-
-
-State 116
-
-   71 ReturnBlock: RETURN ParamList .
-
-    $default  reduce using rule 71 (ReturnBlock)
-
-
-State 117
-
-   54 IfBlock: IF OC . Expression CC OF Codes CF
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 128
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 118
-
-   35 ForLoop: FOR OC . Declaration CC SCOMMA Expression SCOMMA Expression CC OF Codes CF
-
-    ID  shift, and go to state 129
-
-    Declaration  go to state 130
-    Location     go to state 131
-
-
-State 119
-
-   36 WhileLoop: WHILE OC . Expression CC OF Codes CF
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 132
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 120
-
-   31 Vardec: VARTYPE ID .
-   32       | VARTYPE ID . ASGN Expression
-
-    ASGN  shift, and go to state 133
-
-    $default  reduce using rule 31 (Vardec)
-
-
-State 121
-
-   73 VarList: Location COMMA . Location LocComaLoc
-
-    ID  shift, and go to state 129
-
-    Location  go to state 134
-
-
-State 122
-
-   57 ElifPiece: ELIF . OC Expression CC OF Codes CF
-
-    OC  shift, and go to state 135
-
-
-State 123
-
-   53 IfDec: IfBlock ElifBlock . ElseBlock
-
-    ELSE  shift, and go to state 136
-
-    $default  reduce using rule 58 (ElseBlock)
-
-    ElseBlock  go to state 137
-
-
-State 124
-
-   56 ElifBlock: ElifPiece . ElifBlock
-
-    ELIF  shift, and go to state 122
-
-    $default  reduce using rule 55 (ElifBlock)
-
-    ElifBlock  go to state 138
-    ElifPiece  go to state 124
-
-
-State 125
-
-   72 MultipleAssignment: VarList ASGN . MethodCall
-
-    ID  shift, and go to state 139
-
-    MethodCall  go to state 140
-
-
-State 126
-
-   51 LocationPrimePrime: OS Expression . CS
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    CS   shift, and go to state 141
-    '?'  shift, and go to state 60
-
-
-State 127
-
-   30 Vardec: ARRAY VARTYPE ID .
-
-    $default  reduce using rule 30 (Vardec)
-
-
-State 128
-
-   54 IfBlock: IF OC Expression . CC OF Codes CF
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    CC   shift, and go to state 142
-    '?'  shift, and go to state 60
-
-
-State 129
-
-   47 Location: ID . LocationPrime
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    OS    shift, and go to state 56
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    $default  reduce using rule 48 (LocationPrime)
-
-    Expression     go to state 57
-    Location       go to state 45
-    LocationPrime  go to state 58
-    MethodCall     go to state 46
-    Literal        go to state 47
-    TernaryOp      go to state 48
-
-
-State 130
-
-   35 ForLoop: FOR OC Declaration . CC SCOMMA Expression SCOMMA Expression CC OF Codes CF
-
-    CC  shift, and go to state 143
-
-
-State 131
-
-   37 Declaration: Location . '=' Expression
-
-    '='  shift, and go to state 144
-
-
-State 132
-
-   36 WhileLoop: WHILE OC Expression . CC OF Codes CF
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    CC   shift, and go to state 145
-    '?'  shift, and go to state 60
-
-
-State 133
-
-   32 Vardec: VARTYPE ID ASGN . Expression
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 146
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 134
-
-   73 VarList: Location COMMA Location . LocComaLoc
-
-    COMMA  shift, and go to state 147
-
-    $default  reduce using rule 75 (LocComaLoc)
-
-    LocComaLoc  go to state 148
-
-
-State 135
-
-   57 ElifPiece: ELIF OC . Expression CC OF Codes CF
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 149
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 136
-
-   59 ElseBlock: ELSE . OF Codes CF
-
-    OF  shift, and go to state 150
-
-
-State 137
-
-   53 IfDec: IfBlock ElifBlock ElseBlock .
-
-    $default  reduce using rule 53 (IfDec)
-
-
-State 138
-
-   56 ElifBlock: ElifPiece ElifBlock .
-
-    $default  reduce using rule 56 (ElifBlock)
-
-
-State 139
-
-   60 MethodCall: ID . OC ParamList CC
-
-    OC  shift, and go to state 151
-
-
-State 140
-
-   72 MultipleAssignment: VarList ASGN MethodCall .
-
-    $default  reduce using rule 72 (MultipleAssignment)
-
-
-State 141
-
-   51 LocationPrimePrime: OS Expression CS .
-
-    $default  reduce using rule 51 (LocationPrimePrime)
-
-
-State 142
-
-   54 IfBlock: IF OC Expression CC . OF Codes CF
-
-    OF  shift, and go to state 152
-
-
-State 143
-
-   35 ForLoop: FOR OC Declaration CC . SCOMMA Expression SCOMMA Expression CC OF Codes CF
-
-    SCOMMA  shift, and go to state 153
-
-
-State 144
-
-   37 Declaration: Location '=' . Expression
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 154
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 145
-
-   36 WhileLoop: WHILE OC Expression CC . OF Codes CF
-
-    OF  shift, and go to state 155
-
-
-State 146
-
-   32 Vardec: VARTYPE ID ASGN Expression .
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    '?'  shift, and go to state 60
-
-    $default  reduce using rule 32 (Vardec)
-
-
-State 147
-
-   74 LocComaLoc: COMMA . Location LocComaLoc
-
-    ID  shift, and go to state 129
-
-    Location  go to state 156
-
-
-State 148
-
-   73 VarList: Location COMMA Location LocComaLoc .
-
-    $default  reduce using rule 73 (VarList)
-
-
-State 149
-
-   57 ElifPiece: ELIF OC Expression . CC OF Codes CF
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    CC   shift, and go to state 157
-    '?'  shift, and go to state 60
-
-
-State 150
-
-   59 ElseBlock: ELSE OF . Codes CF
-
-    $default  reduce using rule 18 (Codes)
-
-    Codes  go to state 158
-
-
-State 151
-
-   60 MethodCall: ID OC . ParamList CC
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    $default  reduce using rule 63 (ParamList)
-
-    Expression  go to state 109
-    Location    go to state 45
-    MethodCall  go to state 46
-    ParamList   go to state 76
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 152
-
-   54 IfBlock: IF OC Expression CC OF . Codes CF
-
-    $default  reduce using rule 18 (Codes)
-
-    Codes  go to state 159
-
-
-State 153
-
-   35 ForLoop: FOR OC Declaration CC SCOMMA . Expression SCOMMA Expression CC OF Codes CF
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 160
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 154
-
-   37 Declaration: Location '=' Expression .
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    '?'  shift, and go to state 60
-
-    $default  reduce using rule 37 (Declaration)
-
-
-State 155
-
-   36 WhileLoop: WHILE OC Expression CC OF . Codes CF
-
-    $default  reduce using rule 18 (Codes)
-
-    Codes  go to state 161
-
-
-State 156
-
-   74 LocComaLoc: COMMA Location . LocComaLoc
-
-    COMMA  shift, and go to state 147
-
-    $default  reduce using rule 75 (LocComaLoc)
-
-    LocComaLoc  go to state 162
-
-
-State 157
-
-   57 ElifPiece: ELIF OC Expression CC . OF Codes CF
-
-    OF  shift, and go to state 163
-
-
-State 158
-
-   19 Codes: Codes . Code
-   59 ElseBlock: ELSE OF Codes . CF
-
-    ARRAY    shift, and go to state 90
-    RETURN   shift, and go to state 91
-    IF       shift, and go to state 92
-    FOR      shift, and go to state 93
-    WHILE    shift, and go to state 94
-    VARTYPE  shift, and go to state 95
-    CF       shift, and go to state 164
-    ID       shift, and go to state 40
-
-    Code                go to state 97
-    Vardec              go to state 98
-    Loop                go to state 99
-    ForLoop             go to state 100
-    WhileLoop           go to state 101
-    Location            go to state 102
-    IfDec               go to state 103
-    IfBlock             go to state 104
-    MethodCall          go to state 105
-    ReturnBlock         go to state 106
-    MultipleAssignment  go to state 107
-    VarList             go to state 108
-
-
-State 159
-
-   19 Codes: Codes . Code
-   54 IfBlock: IF OC Expression CC OF Codes . CF
-
-    ARRAY    shift, and go to state 90
-    RETURN   shift, and go to state 91
-    IF       shift, and go to state 92
-    FOR      shift, and go to state 93
-    WHILE    shift, and go to state 94
-    VARTYPE  shift, and go to state 95
-    CF       shift, and go to state 165
-    ID       shift, and go to state 40
-
-    Code                go to state 97
-    Vardec              go to state 98
-    Loop                go to state 99
-    ForLoop             go to state 100
-    WhileLoop           go to state 101
-    Location            go to state 102
-    IfDec               go to state 103
-    IfBlock             go to state 104
-    MethodCall          go to state 105
-    ReturnBlock         go to state 106
-    MultipleAssignment  go to state 107
-    VarList             go to state 108
-
-
-State 160
-
-   35 ForLoop: FOR OC Declaration CC SCOMMA Expression . SCOMMA Expression CC OF Codes CF
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    SCOMMA  shift, and go to state 166
-    '?'     shift, and go to state 60
-
-
-State 161
-
-   19 Codes: Codes . Code
-   36 WhileLoop: WHILE OC Expression CC OF Codes . CF
-
-    ARRAY    shift, and go to state 90
-    RETURN   shift, and go to state 91
-    IF       shift, and go to state 92
-    FOR      shift, and go to state 93
-    WHILE    shift, and go to state 94
-    VARTYPE  shift, and go to state 95
-    CF       shift, and go to state 167
-    ID       shift, and go to state 40
-
-    Code                go to state 97
-    Vardec              go to state 98
-    Loop                go to state 99
-    ForLoop             go to state 100
-    WhileLoop           go to state 101
-    Location            go to state 102
-    IfDec               go to state 103
-    IfBlock             go to state 104
-    MethodCall          go to state 105
-    ReturnBlock         go to state 106
-    MultipleAssignment  go to state 107
-    VarList             go to state 108
-
-
-State 162
-
-   74 LocComaLoc: COMMA Location LocComaLoc .
-
-    $default  reduce using rule 74 (LocComaLoc)
-
-
-State 163
-
-   57 ElifPiece: ELIF OC Expression CC OF . Codes CF
-
-    $default  reduce using rule 18 (Codes)
-
-    Codes  go to state 168
-
-
-State 164
-
-   59 ElseBlock: ELSE OF Codes CF .
-
-    $default  reduce using rule 59 (ElseBlock)
-
-
-State 165
-
-   54 IfBlock: IF OC Expression CC OF Codes CF .
-
-    $default  reduce using rule 54 (IfBlock)
-
-
-State 166
-
-   35 ForLoop: FOR OC Declaration CC SCOMMA Expression SCOMMA . Expression CC OF Codes CF
-
-    NOT   shift, and go to state 37
-    BOOL  shift, and go to state 38
-    OC    shift, and go to state 39
-    ID    shift, and go to state 40
-    CHAR  shift, and go to state 41
-    INTL  shift, and go to state 42
-    '-'   shift, and go to state 43
-
-    Expression  go to state 169
-    Location    go to state 45
-    MethodCall  go to state 46
-    Literal     go to state 47
-    TernaryOp   go to state 48
-
-
-State 167
-
-   36 WhileLoop: WHILE OC Expression CC OF Codes CF .
-
-    $default  reduce using rule 36 (WhileLoop)
-
-
-State 168
-
-   19 Codes: Codes . Code
-   57 ElifPiece: ELIF OC Expression CC OF Codes . CF
-
-    ARRAY    shift, and go to state 90
-    RETURN   shift, and go to state 91
-    IF       shift, and go to state 92
-    FOR      shift, and go to state 93
-    WHILE    shift, and go to state 94
-    VARTYPE  shift, and go to state 95
-    CF       shift, and go to state 170
-    ID       shift, and go to state 40
-
-    Code                go to state 97
-    Vardec              go to state 98
-    Loop                go to state 99
-    ForLoop             go to state 100
-    WhileLoop           go to state 101
-    Location            go to state 102
-    IfDec               go to state 103
-    IfBlock             go to state 104
-    MethodCall          go to state 105
-    ReturnBlock         go to state 106
-    MultipleAssignment  go to state 107
-    VarList             go to state 108
-
-
-State 169
-
-   35 ForLoop: FOR OC Declaration CC SCOMMA Expression SCOMMA Expression . CC OF Codes CF
-   70 TernaryOp: Expression . '?' Expression ':' Expression
-
-    CC   shift, and go to state 171
-    '?'  shift, and go to state 60
-
-
-State 170
-
-   57 ElifPiece: ELIF OC Expression CC OF Codes CF .
-
-    $default  reduce using rule 57 (ElifPiece)
-
-
-State 171
-
-   35 ForLoop: FOR OC Declaration CC SCOMMA Expression SCOMMA Expression CC . OF Codes CF
-
-    OF  shift, and go to state 172
-
-
-State 172
-
-   35 ForLoop: FOR OC Declaration CC SCOMMA Expression SCOMMA Expression CC OF . Codes CF
-
-    $default  reduce using rule 18 (Codes)
-
-    Codes  go to state 173
-
-
-State 173
-
-   19 Codes: Codes . Code
-   35 ForLoop: FOR OC Declaration CC SCOMMA Expression SCOMMA Expression CC OF Codes . CF
-
-    ARRAY    shift, and go to state 90
-    RETURN   shift, and go to state 91
-    IF       shift, and go to state 92
-    FOR      shift, and go to state 93
-    WHILE    shift, and go to state 94
-    VARTYPE  shift, and go to state 95
-    CF       shift, and go to state 174
-    ID       shift, and go to state 40
-
-    Code                go to state 97
-    Vardec              go to state 98
-    Loop                go to state 99
-    ForLoop             go to state 100
-    WhileLoop           go to state 101
-    Location            go to state 102
-    IfDec               go to state 103
-    IfBlock             go to state 104
-    MethodCall          go to state 105
-    ReturnBlock         go to state 106
-    MultipleAssignment  go to state 107
-    VarList             go to state 108
-
-
-State 174
-
-   35 ForLoop: FOR OC Declaration CC SCOMMA Expression SCOMMA Expression CC OF Codes CF .
-
-    $default  reduce using rule 35 (ForLoop)
+    $default  reduce using rule 17 (FunctionPrime)

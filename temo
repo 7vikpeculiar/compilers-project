@@ -1,9 +1,5 @@
-for(i = 1; i <= exp; i+=1)
-{
-  prod = prod * base for
-  int 3
+import file
+int a = 3
+def fun(){
+
 }
-
-'A'
-"A"
-

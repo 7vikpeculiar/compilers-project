@@ -1,64 +1,67 @@
 %{
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 using namespace std;
 
 extern int yylex();
 extern int yyparse();
-extern FILE *yyin;
-
+extern FILE **yyin;
 void yyerror(const char *s);
 %}
 
-%token NL ARRAY RETURN BREAK IMPORT IF ELIF ELSE FOR WHILE DEF ARITOP BOOLOP
+%token ARRAY RETURN BREAK IMPORT IF ELIF ELSE FOR WHILE DEF ARITOP BOOLOP
 %token NOT RELOP ASGN SCOMMA COMMA VARTYPE BOOL
-%token OF CF OC CC OS CS ID CHAR INTL
+%token OF CF OC CC OS CS ID CHAR INTL NL
+
 %%
 
-File: Imports GlobalDecs Functions
+/* File: Imports GlobalDecs Functions
 	| GlobalDecs Functions
 	| Functions
 	;
 
-Imports: Import NL
-	| Import Imports NL
+Imports: IMPORT ID Imports
+	| NL
 	;
-
-Import: IMPORT ID;
 
 GlobalDecs: GlobalDec NL
 	| GlobalDecs GlobalDec NL
 	;
-
-GlobalDec: ARRAY VARTYPE ArrayName
+/* Has to be there or else, it would have be empty */
+/* GlobalDec: ARRAY VARTYPE ID OS INTL OneDorTwoD
 	| VARTYPE ID AssignedOrEmpty
 	;
 
-AssignedOrEmpty: ASGN Expression
-	| /*epsilon*/
+AssignedOrEmpty: ASGN Expression NL
+	| NL
 	;
 
-ArrayName: ID OS Expression CS
-	| ID OS Expression OS CS Expression CS
+OneDorTwoD: CS NL
+	| COMMA INTL CS NL
 	;
 
 Functions: Function
 	| Function NL Functions
 	;
 
-Function: DEF ID OC ArgList CC OF Codes CF;
+Function: DEF ID OC FunctionPrime;
+FunctionPrime: ArgList NL OF Codes CF NL; */
 
-Codes: /*epsilon*/
-	| Codes Code
+/* Codes: NL; */
+	/* | Code Codes */
+
+/* ArgList: CC
+	|	Argument ArgListPrime
 	;
 
-ArgList: /*epsilon*/
-	| Argument
- 	| Argument COMMA ArgList
+ArgListPrime: COMMA ArgListPrime
+	| CC
 	;
 
 Argument: VARTYPE ID ;
 
+Expression: INTL; */
+/*
 Code: Loop
 	| IfDec
 	| Vardec
@@ -79,6 +82,7 @@ ForLoop: FOR OC Declaration CC SCOMMA Expression SCOMMA Expression CC OF Codes C
 WhileLoop: WHILE OC Expression CC OF Codes CF;
 
 Declaration: Location '=' Expression;
+
 
 Expression: Location Expres
 	| MethodCall Expres
@@ -108,13 +112,13 @@ IfDec: IfBlock ElifBlock ElseBlock;
 
 IfBlock: IF OC Expression CC OF Codes CF;
 
-ElifBlock: /*epsilon*/
+ElifBlock:
 	| ElifPiece ElifBlock
 	;
 
 ElifPiece : ELIF OC Expression CC OF Codes CF;
 
-ElseBlock: /*epsilon*/
+ElseBlock:
 	| ELSE OF Codes CF
 	;
 
@@ -122,7 +126,7 @@ MethodCall: ID OC ParamList CC;
 
 ParamList:  Expression ',' ParamList
 	| Expression
-	| /*epsilon*/
+	|
 	;
 
 Literal: INTL
@@ -145,18 +149,25 @@ VarList: Location COMMA Location LocComaLoc;
 
 LocComaLoc: COMMA Location LocComaLoc
 	|
-	;
+	; */
 
 %%
 
-void yyerror(const char *s)
+int main(int argc, char **argv)
 {
-        fprintf(stderr, "error: %s\n", s);
-}
-
-
-main(int argc, char **argv)
-{
+				FILE *myfile = fopen(argv[1],"r");
+				fileno(myfile);
+				if (!myfile) {
+					cout << "Cant open " << argv[1] << endl;
+					return -1;
+				}
+				yyin = myfile;
         yyparse();
         printf("Parsing Over\n");
+}
+
+void yyerror(const char *s) {
+  cout << "EEK, parse error!  Message: " << s << endl;
+  // might as well halt now:
+  exit(-1);
 }

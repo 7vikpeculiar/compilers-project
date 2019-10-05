@@ -1,10 +1,9 @@
 %{
   /* #include <iostream> */
   /* using namespace std; */
-  /* extern "C" int yylex(); */
+  #include <cstdio>
   #include "parser.tab.h"
   /* ('..+'|"..+") {return STR;} */
-
 %}
 
 %%
@@ -47,3 +46,5 @@ not {return NOT;}
 ('.'|".") {return CHAR;}
 
 -?[0-9][0-9]* {return INTL;}
+
+%%

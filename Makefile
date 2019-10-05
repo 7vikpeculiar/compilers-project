@@ -1,7 +1,8 @@
 parse: lexer.l parser.y
 	bison -d parser.y
 	flex lexer.l
-	g++ -o parser lex.yy.c parser.tab.c -lfl
+	g++ parser.tab.c lex.yy.c -lfl -o Output
+	./Output temo
 	echo '----------------------'
 
 clean:
