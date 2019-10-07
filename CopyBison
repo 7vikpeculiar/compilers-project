@@ -1,0 +1,172 @@
+%{
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+extern int yylex();
+extern int yyparse();
+extern FILE **yyin;
+void yyerror(const char *s);
+%}
+
+%token ARRAY RETURN BREAK IMPORT IF ELIF ELSE FOR WHILE DEF ARITOP BOOLOP
+%token NOT RELOP ASGN SCOMMA COMMA VARTYPE BOOL
+%token OF CF OC CC OS CS ID CHAR INTL NL
+
+%%
+
+File: Imports GlobalDecs Functions
+	| GlobalDecs Functions
+	| Functions
+	;
+
+Imports: IMPORT ID Imports
+	| NL
+	;
+
+GlobalDecs: GlobalDec NL
+	| GlobalDecs GlobalDec NL
+	;
+/* Has to be there or else, it would have be empty */
+GlobalDec: ARRAY VARTYPE ID OS INTL OneDorTwoD
+	| VARTYPE ID AssignedOrEmpty
+	;
+
+AssignedOrEmpty: ASGN Expression NL
+	| NL
+	;
+
+OneDorTwoD: CS NL
+	| COMMA INTL CS NL
+	;
+
+Functions: Function
+	| Function NL Functions
+	;
+
+Function: DEF ID OC FunctionPrime;
+FunctionPrime: ArgList NL OF Codes CF NL;
+
+Codes: NL;
+	/* | Code Codes */
+
+ArgList: CC
+	|	Argument ArgListPrime
+	;
+
+ArgListPrime: COMMA ArgListPrime
+	| CC
+	;
+
+Argument: VARTYPE ID ;
+
+Expression: INTL;
+/*
+Code: Loop
+	| IfDec
+	| Vardec
+	| MethodCall
+	| ReturnBlock
+	| MultipleAssignment
+	;
+
+Vardec: ARRAY VARTYPE ID
+	| VARTYPE ID
+	| VARTYPE ID ASGN Expression
+	;
+
+Loop: ForLoop | WhileLoop;
+
+ForLoop: FOR OC Declaration CC SCOMMA Expression SCOMMA Expression CC OF Codes CF;
+
+WhileLoop: WHILE OC Expression CC OF Codes CF;
+
+Declaration: Location '=' Expression;
+
+Expression: Location Expres
+	| MethodCall Expres
+	| Literal Expres
+	| TernaryOp Expres
+	| '-' Expression Expres
+	| NOT Expression Expres
+	| OC Expression CC Expres
+	;
+
+Expres:
+	| BinaryOp Expression Expres
+ 	;
+
+Location: ID LocationPrime ;
+
+LocationPrime:
+	| Expression
+	| OS Expression CS LocationPrimePrime
+	;
+
+LocationPrimePrime: OS Expression CS
+	|
+	;
+
+IfDec: IfBlock ElifBlock ElseBlock;
+
+IfBlock: IF OC Expression CC OF Codes CF;
+
+ElifBlock:
+	| ElifPiece ElifBlock
+	;
+
+ElifPiece : ELIF OC Expression CC OF Codes CF;
+
+ElseBlock:
+	| ELSE OF Codes CF
+	;
+
+MethodCall: ID OC ParamList CC;
+
+ParamList:  Expression ',' ParamList
+	| Expression
+	|
+	;
+
+Literal: INTL
+	| BOOL
+	| CHAR
+	;
+
+BinaryOp: RELOP
+	| ARITOP
+	| BOOLOP
+	;
+
+TernaryOp: Expression '?' Expression ':' Expression;
+
+ReturnBlock: RETURN ParamList;
+
+MultipleAssignment: VarList ASGN MethodCall;
+
+VarList: Location COMMA Location LocComaLoc;
+
+LocComaLoc: COMMA Location LocComaLoc
+	|
+	; */
+
+%%
+
+int main(int argc, char **argv)
+{
+				FILE *myfile = fopen(argv[1],"r");
+				fileno(myfile);
+				if (!myfile) {
+					cout << "Cant open " << argv[1] << endl;
+					return -1;
+				}
+				yyin = myfile;
+        yyparse();
+        printf("Parsing Over\n");
+}
+
+void yyerror(const char *s) {
+  cout << "EEK, parse error!  Message: " << s << endl;
+  // might as well halt now:
+  exit(-1);
+}

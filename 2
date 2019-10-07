@@ -1,0 +1,4 @@
+bison -vd parser.y
+flex -l lexer.l
+g++ parser.tab.c lex.yy.c -lfl -o Output
+Makefile:2: recipe for target 'parse' failed
