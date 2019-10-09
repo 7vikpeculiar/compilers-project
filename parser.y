@@ -63,12 +63,14 @@ Code : ListOfStatem {cout << "Code" << endl;}
 		 | Loop 				{cout << "Loop" << endl;}
 		 | Return				{cout << "Return" << endl;}
 		 | Break				{cout << "Break" << endl;}
+		 | TernaryOp    {cout << "Ternary Op" << endl;}
 		 ;
 
 Loop : ForLoop      {cout << "For" << endl;}
 		| WhileLoop			{cout << "While" << endl;}
 		;
 
+TernaryOp: 	Statement QUEST Statement COLON Statement STOP{cout << "Tern Expr" << endl;}
 
 ForLoop : FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF
 

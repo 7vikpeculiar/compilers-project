@@ -5,8 +5,6 @@ Terminals unused in grammar
    RELOP
    BOOL
    NL
-   QUEST
-   COLON
 
 
 State 6 conflicts: 1 shift/reduce
@@ -53,139 +51,142 @@ Grammar
    22     | Loop
    23     | Return
    24     | Break
+   25     | TernaryOp
 
-   25 Loop: ForLoop
-   26     | WhileLoop
+   26 Loop: ForLoop
+   27     | WhileLoop
 
-   27 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF
+   28 TernaryOp: Statement QUEST Statement COLON Statement STOP
 
-   28 WhileLoop: WHILE OC VoidableSingleStatement CC OF ListOfCode CF
+   29 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF
 
-   29 VoidableSingleStatement: VOID
-   30                        | Statement
+   30 WhileLoop: WHILE OC VoidableSingleStatement CC OF ListOfCode CF
 
-   31 Voidable: VOID
-   32         | ListOfStatem
+   31 VoidableSingleStatement: VOID
+   32                        | Statement
 
-   33 Conditional: IF OC Expression CC OF ListOfCode CF
-   34            | IF OC Expression CC OF ListOfCode CF Else_Block
+   33 Voidable: VOID
+   34         | ListOfStatem
 
-   35 Else_Block: ELSE OF ListOfCode CF
-   36           | ELIF OC Expression CC OF ListOfCode CF
-   37           | ELIF OC Expression CC OF ListOfCode CF Else_Block
+   35 Conditional: IF OC Expression CC OF ListOfCode CF
+   36            | IF OC Expression CC OF ListOfCode CF Else_Block
 
-   38 ListOfStatem: ListOfStatem STOP Statement
-   39             | Statement
+   37 Else_Block: ELSE OF ListOfCode CF
+   38           | ELIF OC Expression CC OF ListOfCode CF
+   39           | ELIF OC Expression CC OF ListOfCode CF Else_Block
 
-   40 Statement: Expression
-   41          | Location AsignOp Expression
-   42          | Vartype ID AsignOp Expression
-   43          | Initialization
+   40 ListOfStatem: ListOfStatem STOP Statement
+   41             | Statement
 
-   44 Initialization: Vartype ID
-   45               | ARRAY Vartype ID OS Expression CS
-   46               | ARRAY Vartype ID OS Expression COMMA Expression CS
+   42 Statement: Expression
+   43          | Location AsignOp Expression
+   44          | Vartype ID AsignOp Expression
+   45          | Initialization
 
-   47 AsignOp: ASGN
-   48        | PASGN
-   49        | SASGN
+   46 Initialization: Vartype ID
+   47               | ARRAY Vartype ID OS Expression CS
+   48               | ARRAY Vartype ID OS Expression COMMA Expression CS
 
-   50 Expression: Location
-   51           | Literal
-   52           | Expression ADD Expression
-   53           | Expression SUB Expression
-   54           | Expression MULT Expression
-   55           | Expression DIV Expression
-   56           | Expression LEQ Expression
-   57           | Expression GEQ Expression
-   58           | Expression GT Expression
-   59           | Expression EQ Expression
-   60           | Expression LT Expression
-   61           | Expression NEQ Expression
-   62           | Expression AND Expression
-   63           | Expression OR Expression
-   64           | OC Expression CC
-   65           | NOT Expression
-   66           | SUB Expression
-   67           | MethodCall
+   49 AsignOp: ASGN
+   50        | PASGN
+   51        | SASGN
 
-   68 Location: ID
-   69         | ID OS Expression CS
-   70         | ID OS Expression COMMA Expression CS
+   52 Expression: Location
+   53           | Literal
+   54           | Expression ADD Expression
+   55           | Expression SUB Expression
+   56           | Expression MULT Expression
+   57           | Expression DIV Expression
+   58           | Expression LEQ Expression
+   59           | Expression GEQ Expression
+   60           | Expression GT Expression
+   61           | Expression EQ Expression
+   62           | Expression LT Expression
+   63           | Expression NEQ Expression
+   64           | Expression AND Expression
+   65           | Expression OR Expression
+   66           | OC Expression CC
+   67           | NOT Expression
+   68           | SUB Expression
+   69           | MethodCall
 
-   71 Literal: INTL
-   72        | TRUE
-   73        | FALSE
-   74        | CHAR
+   70 Location: ID
+   71         | ID OS Expression CS
+   72         | ID OS Expression COMMA Expression CS
 
-   75 Vartype: TINT
-   76        | TUINT
-   77        | TBOOL
-   78        | TCHAR
+   73 Literal: INTL
+   74        | TRUE
+   75        | FALSE
+   76        | CHAR
 
-   79 MethodCall: ID OC CC
-   80           | ID OC ListOfExpr CC
+   77 Vartype: TINT
+   78        | TUINT
+   79        | TBOOL
+   80        | TCHAR
 
-   81 ListOfExpr: Expression
-   82           | Expression COMMA Expression
+   81 MethodCall: ID OC CC
+   82           | ID OC ListOfExpr CC
+
+   83 ListOfExpr: Expression
+   84           | Expression COMMA Expression
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-ARRAY (258) 45 46
+ARRAY (258) 47 48
 RETURN (259) 5 6
 BREAK (260) 7
 IMPORT (261) 10
-IF (262) 33 34
-ELIF (263) 36 37
-ELSE (264) 35
-FOR (265) 27
-WHILE (266) 28
+IF (262) 35 36
+ELIF (263) 38 39
+ELSE (264) 37
+FOR (265) 29
+WHILE (266) 30
 DEF (267) 13
 ARITOP (268)
 BOOLOP (269)
-NOT (270) 65
+NOT (270) 67
 RELOP (271)
-SCOMMA (272) 27
-COMMA (273) 17 46 70 82
+SCOMMA (272) 29
+COMMA (273) 17 48 72 84
 BOOL (274)
-VOID (275) 5 14 29 31
-OF (276) 13 27 28 33 34 35 36 37
-CF (277) 13 27 28 33 34 35 36 37
-OC (278) 13 27 28 33 34 36 37 64 79 80
-CC (279) 13 27 28 33 34 36 37 64 79 80
-OS (280) 45 46 69 70
-CS (281) 45 46 69 70
-ID (282) 10 13 16 17 42 44 45 46 68 69 70 79 80
-CHAR (283) 74
-INTL (284) 71
+VOID (275) 5 14 31 33
+OF (276) 13 29 30 35 36 37 38 39
+CF (277) 13 29 30 35 36 37 38 39
+OC (278) 13 29 30 35 36 38 39 66 81 82
+CC (279) 13 29 30 35 36 38 39 66 81 82
+OS (280) 47 48 71 72
+CS (281) 47 48 71 72
+ID (282) 10 13 16 17 44 46 47 48 70 71 72 81 82
+CHAR (283) 76
+INTL (284) 73
 NL (285)
-QUEST (286)
-COLON (287)
-ADD (288) 52
-DIV (289) 55
-EQ (290) 59
-GEQ (291) 57
-GT (292) 58
-LEQ (293) 56
-LT (294) 60
-MULT (295) 54
-NEQ (296) 61
-SUB (297) 53 66
-AND (298) 62
-OR (299) 63
-TRUE (300) 72
-FALSE (301) 73
-TINT (302) 75
-TUINT (303) 76
-TCHAR (304) 78
-TBOOL (305) 77
-STOP (306) 5 6 7 10 38
-ASGN (307) 47
-PASGN (308) 48
-SASGN (309) 49
+QUEST (286) 28
+COLON (287) 28
+ADD (288) 54
+DIV (289) 57
+EQ (290) 61
+GEQ (291) 59
+GT (292) 60
+LEQ (293) 58
+LT (294) 62
+MULT (295) 56
+NEQ (296) 63
+SUB (297) 55 68
+AND (298) 64
+OR (299) 65
+TRUE (300) 74
+FALSE (301) 75
+TINT (302) 77
+TUINT (303) 78
+TCHAR (304) 80
+TBOOL (305) 79
+STOP (306) 5 6 7 10 28 40
+ASGN (307) 49
+PASGN (308) 50
+SASGN (309) 51
 UMINUS (310)
 
 
@@ -212,45 +213,47 @@ VoidableArgList (64)
 ArgList (65)
     on left: 16 17, on right: 15 17
 ListOfCode (66)
-    on left: 18 19, on right: 13 19 27 28 33 34 35 36 37
+    on left: 18 19, on right: 13 19 29 30 35 36 37 38 39
 Code (67)
-    on left: 20 21 22 23 24, on right: 18 19
+    on left: 20 21 22 23 24 25, on right: 18 19
 Loop (68)
-    on left: 25 26, on right: 22
-ForLoop (69)
-    on left: 27, on right: 25
-WhileLoop (70)
-    on left: 28, on right: 26
-VoidableSingleStatement (71)
-    on left: 29 30, on right: 28
-Voidable (72)
-    on left: 31 32, on right: 27
-Conditional (73)
-    on left: 33 34, on right: 21
-Else_Block (74)
-    on left: 35 36 37, on right: 34 37
-ListOfStatem (75)
-    on left: 38 39, on right: 1 2 20 32 38
-Statement (76)
-    on left: 40 41 42 43, on right: 30 38 39
-Initialization (77)
-    on left: 44 45 46, on right: 43
-AsignOp (78)
-    on left: 47 48 49, on right: 41 42
-Expression (79)
-    on left: 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67,
-    on right: 27 33 34 36 37 40 41 42 45 46 52 53 54 55 56 57 58 59
-    60 61 62 63 64 65 66 69 70 81 82
-Location (80)
-    on left: 68 69 70, on right: 41 50
-Literal (81)
-    on left: 71 72 73 74, on right: 51
-Vartype (82)
-    on left: 75 76 77 78, on right: 16 17 42 44 45 46
-MethodCall (83)
-    on left: 79 80, on right: 67
-ListOfExpr (84)
-    on left: 81 82, on right: 6 80
+    on left: 26 27, on right: 22
+TernaryOp (69)
+    on left: 28, on right: 25
+ForLoop (70)
+    on left: 29, on right: 26
+WhileLoop (71)
+    on left: 30, on right: 27
+VoidableSingleStatement (72)
+    on left: 31 32, on right: 30
+Voidable (73)
+    on left: 33 34, on right: 29
+Conditional (74)
+    on left: 35 36, on right: 21
+Else_Block (75)
+    on left: 37 38 39, on right: 36 39
+ListOfStatem (76)
+    on left: 40 41, on right: 1 2 20 34 40
+Statement (77)
+    on left: 42 43 44 45, on right: 28 32 40 41
+Initialization (78)
+    on left: 46 47 48, on right: 45
+AsignOp (79)
+    on left: 49 50 51, on right: 43 44
+Expression (80)
+    on left: 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69,
+    on right: 29 35 36 38 39 42 43 44 47 48 54 55 56 57 58 59 60 61
+    62 63 64 65 66 67 68 71 72 83 84
+Location (81)
+    on left: 70 71 72, on right: 43 52
+Literal (82)
+    on left: 73 74 75 76, on right: 53
+Vartype (83)
+    on left: 77 78 79 80, on right: 16 17 44 46 47 48
+MethodCall (84)
+    on left: 81 82, on right: 69
+ListOfExpr (85)
+    on left: 83 84, on right: 6 82
 
 
 State 0
@@ -290,8 +293,8 @@ State 0
 
 State 1
 
-   45 Initialization: ARRAY . Vartype ID OS Expression CS
-   46               | ARRAY . Vartype ID OS Expression COMMA Expression CS
+   47 Initialization: ARRAY . Vartype ID OS Expression CS
+   48               | ARRAY . Vartype ID OS Expression COMMA Expression CS
 
     TINT   shift, and go to state 12
     TUINT  shift, and go to state 13
@@ -317,7 +320,7 @@ State 3
 
 State 4
 
-   65 Expression: NOT . Expression
+   67 Expression: NOT . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -336,7 +339,7 @@ State 4
 
 State 5
 
-   64 Expression: OC . Expression CC
+   66 Expression: OC . Expression CC
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -355,36 +358,36 @@ State 5
 
 State 6
 
-   68 Location: ID .
-   69         | ID . OS Expression CS
-   70         | ID . OS Expression COMMA Expression CS
-   79 MethodCall: ID . OC CC
-   80           | ID . OC ListOfExpr CC
+   70 Location: ID .
+   71         | ID . OS Expression CS
+   72         | ID . OS Expression COMMA Expression CS
+   81 MethodCall: ID . OC CC
+   82           | ID . OC ListOfExpr CC
 
     OC  shift, and go to state 35
     OS  shift, and go to state 36
 
-    OC        [reduce using rule 68 (Location)]
-    $default  reduce using rule 68 (Location)
+    OC        [reduce using rule 70 (Location)]
+    $default  reduce using rule 70 (Location)
 
 
 State 7
 
-   74 Literal: CHAR .
+   76 Literal: CHAR .
 
-    $default  reduce using rule 74 (Literal)
+    $default  reduce using rule 76 (Literal)
 
 
 State 8
 
-   71 Literal: INTL .
+   73 Literal: INTL .
 
-    $default  reduce using rule 71 (Literal)
+    $default  reduce using rule 73 (Literal)
 
 
 State 9
 
-   66 Expression: SUB . Expression
+   68 Expression: SUB . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -403,44 +406,44 @@ State 9
 
 State 10
 
-   72 Literal: TRUE .
+   74 Literal: TRUE .
 
-    $default  reduce using rule 72 (Literal)
+    $default  reduce using rule 74 (Literal)
 
 
 State 11
 
-   73 Literal: FALSE .
+   75 Literal: FALSE .
 
-    $default  reduce using rule 73 (Literal)
+    $default  reduce using rule 75 (Literal)
 
 
 State 12
 
-   75 Vartype: TINT .
+   77 Vartype: TINT .
 
-    $default  reduce using rule 75 (Vartype)
+    $default  reduce using rule 77 (Vartype)
 
 
 State 13
 
-   76 Vartype: TUINT .
-
-    $default  reduce using rule 76 (Vartype)
-
-
-State 14
-
-   78 Vartype: TCHAR .
+   78 Vartype: TUINT .
 
     $default  reduce using rule 78 (Vartype)
 
 
+State 14
+
+   80 Vartype: TCHAR .
+
+    $default  reduce using rule 80 (Vartype)
+
+
 State 15
 
-   77 Vartype: TBOOL .
+   79 Vartype: TBOOL .
 
-    $default  reduce using rule 77 (Vartype)
+    $default  reduce using rule 79 (Vartype)
 
 
 State 16
@@ -514,7 +517,7 @@ State 20
 State 21
 
     2 File: ListOfStatem . ListofFunctions
-   38 ListOfStatem: ListOfStatem . STOP Statement
+   40 ListOfStatem: ListOfStatem . STOP Statement
 
     DEF   shift, and go to state 3
     STOP  shift, and go to state 43
@@ -525,33 +528,33 @@ State 21
 
 State 22
 
-   39 ListOfStatem: Statement .
+   41 ListOfStatem: Statement .
 
-    $default  reduce using rule 39 (ListOfStatem)
+    $default  reduce using rule 41 (ListOfStatem)
 
 
 State 23
 
-   43 Statement: Initialization .
+   45 Statement: Initialization .
 
-    $default  reduce using rule 43 (Statement)
+    $default  reduce using rule 45 (Statement)
 
 
 State 24
 
-   40 Statement: Expression .
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   42 Statement: Expression .
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
     ADD   shift, and go to state 45
     DIV   shift, and go to state 46
@@ -566,50 +569,50 @@ State 24
     AND   shift, and go to state 55
     OR    shift, and go to state 56
 
-    SUB       [reduce using rule 40 (Statement)]
-    $default  reduce using rule 40 (Statement)
+    SUB       [reduce using rule 42 (Statement)]
+    $default  reduce using rule 42 (Statement)
 
 
 State 25
 
-   41 Statement: Location . AsignOp Expression
-   50 Expression: Location .
+   43 Statement: Location . AsignOp Expression
+   52 Expression: Location .
 
     ASGN   shift, and go to state 57
     PASGN  shift, and go to state 58
     SASGN  shift, and go to state 59
 
-    $default  reduce using rule 50 (Expression)
+    $default  reduce using rule 52 (Expression)
 
     AsignOp  go to state 60
 
 
 State 26
 
-   51 Expression: Literal .
+   53 Expression: Literal .
 
-    $default  reduce using rule 51 (Expression)
+    $default  reduce using rule 53 (Expression)
 
 
 State 27
 
-   42 Statement: Vartype . ID AsignOp Expression
-   44 Initialization: Vartype . ID
+   44 Statement: Vartype . ID AsignOp Expression
+   46 Initialization: Vartype . ID
 
     ID  shift, and go to state 61
 
 
 State 28
 
-   67 Expression: MethodCall .
+   69 Expression: MethodCall .
 
-    $default  reduce using rule 67 (Expression)
+    $default  reduce using rule 69 (Expression)
 
 
 State 29
 
-   45 Initialization: ARRAY Vartype . ID OS Expression CS
-   46               | ARRAY Vartype . ID OS Expression COMMA Expression CS
+   47 Initialization: ARRAY Vartype . ID OS Expression CS
+   48               | ARRAY Vartype . ID OS Expression COMMA Expression CS
 
     ID  shift, and go to state 62
 
@@ -630,45 +633,45 @@ State 31
 
 State 32
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-   65           | NOT Expression .
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+   67           | NOT Expression .
 
-    $default  reduce using rule 65 (Expression)
+    $default  reduce using rule 67 (Expression)
 
 
 State 33
 
-   50 Expression: Location .
+   52 Expression: Location .
 
-    $default  reduce using rule 50 (Expression)
+    $default  reduce using rule 52 (Expression)
 
 
 State 34
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-   64           | OC Expression . CC
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+   66           | OC Expression . CC
 
     CC    shift, and go to state 65
     ADD   shift, and go to state 45
@@ -687,8 +690,8 @@ State 34
 
 State 35
 
-   79 MethodCall: ID OC . CC
-   80           | ID OC . ListOfExpr CC
+   81 MethodCall: ID OC . CC
+   82           | ID OC . ListOfExpr CC
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -709,8 +712,8 @@ State 35
 
 State 36
 
-   69 Location: ID OS . Expression CS
-   70         | ID OS . Expression COMMA Expression CS
+   71 Location: ID OS . Expression CS
+   72         | ID OS . Expression COMMA Expression CS
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -729,21 +732,21 @@ State 36
 
 State 37
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-   66           | SUB Expression .
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+   68           | SUB Expression .
 
-    $default  reduce using rule 66 (Expression)
+    $default  reduce using rule 68 (Expression)
 
 
 State 38
@@ -775,7 +778,7 @@ State 40
 State 41
 
     1 File: ImportList ListOfStatem . ListofFunctions
-   38 ListOfStatem: ListOfStatem . STOP Statement
+   40 ListOfStatem: ListOfStatem . STOP Statement
 
     DEF   shift, and go to state 3
     STOP  shift, and go to state 43
@@ -793,7 +796,7 @@ State 42
 
 State 43
 
-   38 ListOfStatem: ListOfStatem STOP . Statement
+   40 ListOfStatem: ListOfStatem STOP . Statement
 
     ARRAY  shift, and go to state 1
     NOT    shift, and go to state 4
@@ -832,7 +835,7 @@ State 44
 
 State 45
 
-   52 Expression: Expression ADD . Expression
+   54 Expression: Expression ADD . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -851,7 +854,7 @@ State 45
 
 State 46
 
-   55 Expression: Expression DIV . Expression
+   57 Expression: Expression DIV . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -870,7 +873,7 @@ State 46
 
 State 47
 
-   59 Expression: Expression EQ . Expression
+   61 Expression: Expression EQ . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -889,7 +892,7 @@ State 47
 
 State 48
 
-   57 Expression: Expression GEQ . Expression
+   59 Expression: Expression GEQ . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -908,7 +911,7 @@ State 48
 
 State 49
 
-   58 Expression: Expression GT . Expression
+   60 Expression: Expression GT . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -927,7 +930,7 @@ State 49
 
 State 50
 
-   56 Expression: Expression LEQ . Expression
+   58 Expression: Expression LEQ . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -946,7 +949,7 @@ State 50
 
 State 51
 
-   60 Expression: Expression LT . Expression
+   62 Expression: Expression LT . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -965,7 +968,7 @@ State 51
 
 State 52
 
-   54 Expression: Expression MULT . Expression
+   56 Expression: Expression MULT . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -984,7 +987,7 @@ State 52
 
 State 53
 
-   61 Expression: Expression NEQ . Expression
+   63 Expression: Expression NEQ . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -1003,7 +1006,7 @@ State 53
 
 State 54
 
-   53 Expression: Expression SUB . Expression
+   55 Expression: Expression SUB . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -1022,7 +1025,7 @@ State 54
 
 State 55
 
-   62 Expression: Expression AND . Expression
+   64 Expression: Expression AND . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -1041,7 +1044,7 @@ State 55
 
 State 56
 
-   63 Expression: Expression OR . Expression
+   65 Expression: Expression OR . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -1060,28 +1063,28 @@ State 56
 
 State 57
 
-   47 AsignOp: ASGN .
-
-    $default  reduce using rule 47 (AsignOp)
-
-
-State 58
-
-   48 AsignOp: PASGN .
-
-    $default  reduce using rule 48 (AsignOp)
-
-
-State 59
-
-   49 AsignOp: SASGN .
+   49 AsignOp: ASGN .
 
     $default  reduce using rule 49 (AsignOp)
 
 
+State 58
+
+   50 AsignOp: PASGN .
+
+    $default  reduce using rule 50 (AsignOp)
+
+
+State 59
+
+   51 AsignOp: SASGN .
+
+    $default  reduce using rule 51 (AsignOp)
+
+
 State 60
 
-   41 Statement: Location AsignOp . Expression
+   43 Statement: Location AsignOp . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -1100,22 +1103,22 @@ State 60
 
 State 61
 
-   42 Statement: Vartype ID . AsignOp Expression
-   44 Initialization: Vartype ID .
+   44 Statement: Vartype ID . AsignOp Expression
+   46 Initialization: Vartype ID .
 
     ASGN   shift, and go to state 57
     PASGN  shift, and go to state 58
     SASGN  shift, and go to state 59
 
-    $default  reduce using rule 44 (Initialization)
+    $default  reduce using rule 46 (Initialization)
 
     AsignOp  go to state 85
 
 
 State 62
 
-   45 Initialization: ARRAY Vartype ID . OS Expression CS
-   46               | ARRAY Vartype ID . OS Expression COMMA Expression CS
+   47 Initialization: ARRAY Vartype ID . OS Expression CS
+   48               | ARRAY Vartype ID . OS Expression COMMA Expression CS
 
     OS  shift, and go to state 86
 
@@ -1144,34 +1147,34 @@ State 64
 
 State 65
 
-   64 Expression: OC Expression CC .
+   66 Expression: OC Expression CC .
 
-    $default  reduce using rule 64 (Expression)
+    $default  reduce using rule 66 (Expression)
 
 
 State 66
 
-   79 MethodCall: ID OC CC .
+   81 MethodCall: ID OC CC .
 
-    $default  reduce using rule 79 (MethodCall)
+    $default  reduce using rule 81 (MethodCall)
 
 
 State 67
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-   81 ListOfExpr: Expression .
-   82           | Expression . COMMA Expression
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+   83 ListOfExpr: Expression .
+   84           | Expression . COMMA Expression
 
     COMMA  shift, and go to state 91
     ADD    shift, and go to state 45
@@ -1187,32 +1190,32 @@ State 67
     AND    shift, and go to state 55
     OR     shift, and go to state 56
 
-    $default  reduce using rule 81 (ListOfExpr)
+    $default  reduce using rule 83 (ListOfExpr)
 
 
 State 68
 
-   80 MethodCall: ID OC ListOfExpr . CC
+   82 MethodCall: ID OC ListOfExpr . CC
 
     CC  shift, and go to state 92
 
 
 State 69
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-   69 Location: ID OS Expression . CS
-   70         | ID OS Expression . COMMA Expression CS
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+   71 Location: ID OS Expression . CS
+   72         | ID OS Expression . COMMA Expression CS
 
     COMMA  shift, and go to state 93
     CS     shift, and go to state 94
@@ -1244,26 +1247,26 @@ State 70
 
 State 71
 
-   38 ListOfStatem: ListOfStatem STOP Statement .
+   40 ListOfStatem: ListOfStatem STOP Statement .
 
-    $default  reduce using rule 38 (ListOfStatem)
+    $default  reduce using rule 40 (ListOfStatem)
 
 
 State 72
 
-   52 Expression: Expression . ADD Expression
-   52           | Expression ADD Expression .
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   54 Expression: Expression . ADD Expression
+   54           | Expression ADD Expression .
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
     DIV   shift, and go to state 46
     EQ    shift, and go to state 47
@@ -1276,24 +1279,24 @@ State 72
     AND   shift, and go to state 55
     OR    shift, and go to state 56
 
-    $default  reduce using rule 52 (Expression)
+    $default  reduce using rule 54 (Expression)
 
 
 State 73
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   55           | Expression DIV Expression .
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   57           | Expression DIV Expression .
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
     EQ   shift, and go to state 47
     GEQ  shift, and go to state 48
@@ -1301,165 +1304,27 @@ State 73
     LEQ  shift, and go to state 50
     LT   shift, and go to state 51
     NEQ  shift, and go to state 53
-    AND  shift, and go to state 55
-    OR   shift, and go to state 56
-
-    $default  reduce using rule 55 (Expression)
-
-
-State 74
-
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   59           | Expression EQ Expression .
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-
-    AND  shift, and go to state 55
-    OR   shift, and go to state 56
-
-    $default  reduce using rule 59 (Expression)
-
-
-State 75
-
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   57           | Expression GEQ Expression .
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-
     AND  shift, and go to state 55
     OR   shift, and go to state 56
 
     $default  reduce using rule 57 (Expression)
 
 
-State 76
+State 74
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   58           | Expression GT Expression .
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-
-    AND  shift, and go to state 55
-    OR   shift, and go to state 56
-
-    $default  reduce using rule 58 (Expression)
-
-
-State 77
-
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   56           | Expression LEQ Expression .
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-
-    AND  shift, and go to state 55
-    OR   shift, and go to state 56
-
-    $default  reduce using rule 56 (Expression)
-
-
-State 78
-
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   60           | Expression LT Expression .
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-
-    AND  shift, and go to state 55
-    OR   shift, and go to state 56
-
-    $default  reduce using rule 60 (Expression)
-
-
-State 79
-
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   54           | Expression MULT Expression .
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-
-    EQ   shift, and go to state 47
-    GEQ  shift, and go to state 48
-    GT   shift, and go to state 49
-    LEQ  shift, and go to state 50
-    LT   shift, and go to state 51
-    NEQ  shift, and go to state 53
-    AND  shift, and go to state 55
-    OR   shift, and go to state 56
-
-    $default  reduce using rule 54 (Expression)
-
-
-State 80
-
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   61           | Expression NEQ Expression .
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   61           | Expression EQ Expression .
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
     AND  shift, and go to state 55
     OR   shift, and go to state 56
@@ -1467,21 +1332,159 @@ State 80
     $default  reduce using rule 61 (Expression)
 
 
+State 75
+
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   59           | Expression GEQ Expression .
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+
+    AND  shift, and go to state 55
+    OR   shift, and go to state 56
+
+    $default  reduce using rule 59 (Expression)
+
+
+State 76
+
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   60           | Expression GT Expression .
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+
+    AND  shift, and go to state 55
+    OR   shift, and go to state 56
+
+    $default  reduce using rule 60 (Expression)
+
+
+State 77
+
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   58           | Expression LEQ Expression .
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+
+    AND  shift, and go to state 55
+    OR   shift, and go to state 56
+
+    $default  reduce using rule 58 (Expression)
+
+
+State 78
+
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   62           | Expression LT Expression .
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+
+    AND  shift, and go to state 55
+    OR   shift, and go to state 56
+
+    $default  reduce using rule 62 (Expression)
+
+
+State 79
+
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   56           | Expression MULT Expression .
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+
+    EQ   shift, and go to state 47
+    GEQ  shift, and go to state 48
+    GT   shift, and go to state 49
+    LEQ  shift, and go to state 50
+    LT   shift, and go to state 51
+    NEQ  shift, and go to state 53
+    AND  shift, and go to state 55
+    OR   shift, and go to state 56
+
+    $default  reduce using rule 56 (Expression)
+
+
+State 80
+
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   63           | Expression NEQ Expression .
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+
+    AND  shift, and go to state 55
+    OR   shift, and go to state 56
+
+    $default  reduce using rule 63 (Expression)
+
+
 State 81
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   53           | Expression SUB Expression .
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   55           | Expression SUB Expression .
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
     DIV   shift, and go to state 46
     EQ    shift, and go to state 47
@@ -1494,62 +1497,62 @@ State 81
     AND   shift, and go to state 55
     OR    shift, and go to state 56
 
-    $default  reduce using rule 53 (Expression)
+    $default  reduce using rule 55 (Expression)
 
 
 State 82
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   62           | Expression AND Expression .
-   63           | Expression . OR Expression
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   64           | Expression AND Expression .
+   65           | Expression . OR Expression
 
-    $default  reduce using rule 62 (Expression)
+    $default  reduce using rule 64 (Expression)
 
 
 State 83
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-   63           | Expression OR Expression .
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+   65           | Expression OR Expression .
 
-    $default  reduce using rule 63 (Expression)
+    $default  reduce using rule 65 (Expression)
 
 
 State 84
 
-   41 Statement: Location AsignOp Expression .
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   43 Statement: Location AsignOp Expression .
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
     ADD   shift, and go to state 45
     DIV   shift, and go to state 46
@@ -1564,13 +1567,13 @@ State 84
     AND   shift, and go to state 55
     OR    shift, and go to state 56
 
-    SUB       [reduce using rule 41 (Statement)]
-    $default  reduce using rule 41 (Statement)
+    SUB       [reduce using rule 43 (Statement)]
+    $default  reduce using rule 43 (Statement)
 
 
 State 85
 
-   42 Statement: Vartype ID AsignOp . Expression
+   44 Statement: Vartype ID AsignOp . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -1589,8 +1592,8 @@ State 85
 
 State 86
 
-   45 Initialization: ARRAY Vartype ID OS . Expression CS
-   46               | ARRAY Vartype ID OS . Expression COMMA Expression CS
+   47 Initialization: ARRAY Vartype ID OS . Expression CS
+   48               | ARRAY Vartype ID OS . Expression COMMA Expression CS
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -1640,7 +1643,7 @@ State 90
 
 State 91
 
-   82 ListOfExpr: Expression COMMA . Expression
+   84 ListOfExpr: Expression COMMA . Expression
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -1659,14 +1662,14 @@ State 91
 
 State 92
 
-   80 MethodCall: ID OC ListOfExpr CC .
+   82 MethodCall: ID OC ListOfExpr CC .
 
-    $default  reduce using rule 80 (MethodCall)
+    $default  reduce using rule 82 (MethodCall)
 
 
 State 93
 
-   70 Location: ID OS Expression COMMA . Expression CS
+   72 Location: ID OS Expression COMMA . Expression CS
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -1685,26 +1688,26 @@ State 93
 
 State 94
 
-   69 Location: ID OS Expression CS .
+   71 Location: ID OS Expression CS .
 
-    $default  reduce using rule 69 (Location)
+    $default  reduce using rule 71 (Location)
 
 
 State 95
 
-   42 Statement: Vartype ID AsignOp Expression .
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   44 Statement: Vartype ID AsignOp Expression .
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
     ADD   shift, and go to state 45
     DIV   shift, and go to state 46
@@ -1719,26 +1722,26 @@ State 95
     AND   shift, and go to state 55
     OR    shift, and go to state 56
 
-    SUB       [reduce using rule 42 (Statement)]
-    $default  reduce using rule 42 (Statement)
+    SUB       [reduce using rule 44 (Statement)]
+    $default  reduce using rule 44 (Statement)
 
 
 State 96
 
-   45 Initialization: ARRAY Vartype ID OS Expression . CS
-   46               | ARRAY Vartype ID OS Expression . COMMA Expression CS
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   47 Initialization: ARRAY Vartype ID OS Expression . CS
+   48               | ARRAY Vartype ID OS Expression . COMMA Expression CS
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
     COMMA  shift, and go to state 102
     CS     shift, and go to state 103
@@ -1784,19 +1787,19 @@ State 99
 
 State 100
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-   82 ListOfExpr: Expression COMMA Expression .
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+   84 ListOfExpr: Expression COMMA Expression .
 
     ADD   shift, and go to state 45
     DIV   shift, and go to state 46
@@ -1811,24 +1814,24 @@ State 100
     AND   shift, and go to state 55
     OR    shift, and go to state 56
 
-    $default  reduce using rule 82 (ListOfExpr)
+    $default  reduce using rule 84 (ListOfExpr)
 
 
 State 101
 
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
-   70 Location: ID OS Expression COMMA Expression . CS
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+   72 Location: ID OS Expression COMMA Expression . CS
 
     CS    shift, and go to state 106
     ADD   shift, and go to state 45
@@ -1847,7 +1850,7 @@ State 101
 
 State 102
 
-   46 Initialization: ARRAY Vartype ID OS Expression COMMA . Expression CS
+   48 Initialization: ARRAY Vartype ID OS Expression COMMA . Expression CS
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -1866,9 +1869,9 @@ State 102
 
 State 103
 
-   45 Initialization: ARRAY Vartype ID OS Expression CS .
+   47 Initialization: ARRAY Vartype ID OS Expression CS .
 
-    $default  reduce using rule 45 (Initialization)
+    $default  reduce using rule 47 (Initialization)
 
 
 State 104
@@ -1899,11 +1902,12 @@ State 104
     ListOfCode      go to state 115
     Code            go to state 116
     Loop            go to state 117
-    ForLoop         go to state 118
-    WhileLoop       go to state 119
-    Conditional     go to state 120
-    ListOfStatem    go to state 121
-    Statement       go to state 22
+    TernaryOp       go to state 118
+    ForLoop         go to state 119
+    WhileLoop       go to state 120
+    Conditional     go to state 121
+    ListOfStatem    go to state 122
+    Statement       go to state 123
     Initialization  go to state 23
     Expression      go to state 24
     Location        go to state 25
@@ -1916,33 +1920,33 @@ State 105
 
    17 ArgList: ArgList COMMA Vartype . ID
 
-    ID  shift, and go to state 122
+    ID  shift, and go to state 124
 
 
 State 106
 
-   70 Location: ID OS Expression COMMA Expression CS .
+   72 Location: ID OS Expression COMMA Expression CS .
 
-    $default  reduce using rule 70 (Location)
+    $default  reduce using rule 72 (Location)
 
 
 State 107
 
-   46 Initialization: ARRAY Vartype ID OS Expression COMMA Expression . CS
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   48 Initialization: ARRAY Vartype ID OS Expression COMMA Expression . CS
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
-    CS    shift, and go to state 123
+    CS    shift, and go to state 125
     ADD   shift, and go to state 45
     DIV   shift, and go to state 46
     EQ    shift, and go to state 47
@@ -1963,7 +1967,7 @@ State 108
     6       | RETURN . ListOfExpr STOP
 
     NOT    shift, and go to state 4
-    VOID   shift, and go to state 124
+    VOID   shift, and go to state 126
     OC     shift, and go to state 5
     ID     shift, and go to state 6
     CHAR   shift, and go to state 7
@@ -1976,36 +1980,36 @@ State 108
     Location    go to state 33
     Literal     go to state 26
     MethodCall  go to state 28
-    ListOfExpr  go to state 125
+    ListOfExpr  go to state 127
 
 
 State 109
 
     7 Break: BREAK . STOP
 
-    STOP  shift, and go to state 126
+    STOP  shift, and go to state 128
 
 
 State 110
 
-   33 Conditional: IF . OC Expression CC OF ListOfCode CF
-   34            | IF . OC Expression CC OF ListOfCode CF Else_Block
+   35 Conditional: IF . OC Expression CC OF ListOfCode CF
+   36            | IF . OC Expression CC OF ListOfCode CF Else_Block
 
-    OC  shift, and go to state 127
+    OC  shift, and go to state 129
 
 
 State 111
 
-   27 ForLoop: FOR . OC Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF
+   29 ForLoop: FOR . OC Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF
 
-    OC  shift, and go to state 128
+    OC  shift, and go to state 130
 
 
 State 112
 
-   28 WhileLoop: WHILE . OC VoidableSingleStatement CC OF ListOfCode CF
+   30 WhileLoop: WHILE . OC VoidableSingleStatement CC OF ListOfCode CF
 
-    OC  shift, and go to state 129
+    OC  shift, and go to state 131
 
 
 State 113
@@ -2026,7 +2030,7 @@ State 115
 
    13 Function: DEF ID OC VoidableArgList CC OF ListOfCode . CF
 
-    CF  shift, and go to state 130
+    CF  shift, and go to state 132
 
 
 State 116
@@ -2057,14 +2061,15 @@ State 116
 
     Return          go to state 113
     Break           go to state 114
-    ListOfCode      go to state 131
+    ListOfCode      go to state 133
     Code            go to state 116
     Loop            go to state 117
-    ForLoop         go to state 118
-    WhileLoop       go to state 119
-    Conditional     go to state 120
-    ListOfStatem    go to state 121
-    Statement       go to state 22
+    TernaryOp       go to state 118
+    ForLoop         go to state 119
+    WhileLoop       go to state 120
+    Conditional     go to state 121
+    ListOfStatem    go to state 122
+    Statement       go to state 123
     Initialization  go to state 23
     Expression      go to state 24
     Location        go to state 25
@@ -2082,74 +2087,91 @@ State 117
 
 State 118
 
-   25 Loop: ForLoop .
+   25 Code: TernaryOp .
 
-    $default  reduce using rule 25 (Loop)
+    $default  reduce using rule 25 (Code)
 
 
 State 119
 
-   26 Loop: WhileLoop .
+   26 Loop: ForLoop .
 
     $default  reduce using rule 26 (Loop)
 
 
 State 120
 
+   27 Loop: WhileLoop .
+
+    $default  reduce using rule 27 (Loop)
+
+
+State 121
+
    21 Code: Conditional .
 
     $default  reduce using rule 21 (Code)
 
 
-State 121
+State 122
 
    20 Code: ListOfStatem .
-   38 ListOfStatem: ListOfStatem . STOP Statement
+   40 ListOfStatem: ListOfStatem . STOP Statement
 
     STOP  shift, and go to state 43
 
     $default  reduce using rule 20 (Code)
 
 
-State 122
+State 123
+
+   28 TernaryOp: Statement . QUEST Statement COLON Statement STOP
+   41 ListOfStatem: Statement .
+
+    QUEST  shift, and go to state 134
+
+    $default  reduce using rule 41 (ListOfStatem)
+
+
+State 124
 
    17 ArgList: ArgList COMMA Vartype ID .
 
     $default  reduce using rule 17 (ArgList)
 
 
-State 123
-
-   46 Initialization: ARRAY Vartype ID OS Expression COMMA Expression CS .
-
-    $default  reduce using rule 46 (Initialization)
-
-
-State 124
-
-    5 Return: RETURN VOID . STOP
-
-    STOP  shift, and go to state 132
-
-
 State 125
 
-    6 Return: RETURN ListOfExpr . STOP
+   48 Initialization: ARRAY Vartype ID OS Expression COMMA Expression CS .
 
-    STOP  shift, and go to state 133
+    $default  reduce using rule 48 (Initialization)
 
 
 State 126
+
+    5 Return: RETURN VOID . STOP
+
+    STOP  shift, and go to state 135
+
+
+State 127
+
+    6 Return: RETURN ListOfExpr . STOP
+
+    STOP  shift, and go to state 136
+
+
+State 128
 
     7 Break: BREAK STOP .
 
     $default  reduce using rule 7 (Break)
 
 
-State 127
+State 129
 
-   33 Conditional: IF OC . Expression CC OF ListOfCode CF
-   34            | IF OC . Expression CC OF ListOfCode CF Else_Block
+   35 Conditional: IF OC . Expression CC OF ListOfCode CF
+   36            | IF OC . Expression CC OF ListOfCode CF Else_Block
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -2160,45 +2182,15 @@ State 127
     TRUE   shift, and go to state 10
     FALSE  shift, and go to state 11
 
-    Expression  go to state 134
+    Expression  go to state 137
     Location    go to state 33
     Literal     go to state 26
     MethodCall  go to state 28
 
 
-State 128
+State 130
 
-   27 ForLoop: FOR OC . Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF
-
-    ARRAY  shift, and go to state 1
-    NOT    shift, and go to state 4
-    VOID   shift, and go to state 135
-    OC     shift, and go to state 5
-    ID     shift, and go to state 6
-    CHAR   shift, and go to state 7
-    INTL   shift, and go to state 8
-    SUB    shift, and go to state 9
-    TRUE   shift, and go to state 10
-    FALSE  shift, and go to state 11
-    TINT   shift, and go to state 12
-    TUINT  shift, and go to state 13
-    TCHAR  shift, and go to state 14
-    TBOOL  shift, and go to state 15
-
-    Voidable        go to state 136
-    ListOfStatem    go to state 137
-    Statement       go to state 22
-    Initialization  go to state 23
-    Expression      go to state 24
-    Location        go to state 25
-    Literal         go to state 26
-    Vartype         go to state 27
-    MethodCall      go to state 28
-
-
-State 129
-
-   28 WhileLoop: WHILE OC . VoidableSingleStatement CC OF ListOfCode CF
+   29 ForLoop: FOR OC . Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF
 
     ARRAY  shift, and go to state 1
     NOT    shift, and go to state 4
@@ -2215,8 +2207,38 @@ State 129
     TCHAR  shift, and go to state 14
     TBOOL  shift, and go to state 15
 
-    VoidableSingleStatement  go to state 139
-    Statement                go to state 140
+    Voidable        go to state 139
+    ListOfStatem    go to state 140
+    Statement       go to state 22
+    Initialization  go to state 23
+    Expression      go to state 24
+    Location        go to state 25
+    Literal         go to state 26
+    Vartype         go to state 27
+    MethodCall      go to state 28
+
+
+State 131
+
+   30 WhileLoop: WHILE OC . VoidableSingleStatement CC OF ListOfCode CF
+
+    ARRAY  shift, and go to state 1
+    NOT    shift, and go to state 4
+    VOID   shift, and go to state 141
+    OC     shift, and go to state 5
+    ID     shift, and go to state 6
+    CHAR   shift, and go to state 7
+    INTL   shift, and go to state 8
+    SUB    shift, and go to state 9
+    TRUE   shift, and go to state 10
+    FALSE  shift, and go to state 11
+    TINT   shift, and go to state 12
+    TUINT  shift, and go to state 13
+    TCHAR  shift, and go to state 14
+    TBOOL  shift, and go to state 15
+
+    VoidableSingleStatement  go to state 142
+    Statement                go to state 143
     Initialization           go to state 23
     Expression               go to state 24
     Location                 go to state 25
@@ -2225,52 +2247,79 @@ State 129
     MethodCall               go to state 28
 
 
-State 130
+State 132
 
    13 Function: DEF ID OC VoidableArgList CC OF ListOfCode CF .
 
     $default  reduce using rule 13 (Function)
 
 
-State 131
+State 133
 
    19 ListOfCode: Code ListOfCode .
 
     $default  reduce using rule 19 (ListOfCode)
 
 
-State 132
+State 134
+
+   28 TernaryOp: Statement QUEST . Statement COLON Statement STOP
+
+    ARRAY  shift, and go to state 1
+    NOT    shift, and go to state 4
+    OC     shift, and go to state 5
+    ID     shift, and go to state 6
+    CHAR   shift, and go to state 7
+    INTL   shift, and go to state 8
+    SUB    shift, and go to state 9
+    TRUE   shift, and go to state 10
+    FALSE  shift, and go to state 11
+    TINT   shift, and go to state 12
+    TUINT  shift, and go to state 13
+    TCHAR  shift, and go to state 14
+    TBOOL  shift, and go to state 15
+
+    Statement       go to state 144
+    Initialization  go to state 23
+    Expression      go to state 24
+    Location        go to state 25
+    Literal         go to state 26
+    Vartype         go to state 27
+    MethodCall      go to state 28
+
+
+State 135
 
     5 Return: RETURN VOID STOP .
 
     $default  reduce using rule 5 (Return)
 
 
-State 133
+State 136
 
     6 Return: RETURN ListOfExpr STOP .
 
     $default  reduce using rule 6 (Return)
 
 
-State 134
+State 137
 
-   33 Conditional: IF OC Expression . CC OF ListOfCode CF
-   34            | IF OC Expression . CC OF ListOfCode CF Else_Block
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   35 Conditional: IF OC Expression . CC OF ListOfCode CF
+   36            | IF OC Expression . CC OF ListOfCode CF Else_Block
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
-    CC    shift, and go to state 141
+    CC    shift, and go to state 145
     ADD   shift, and go to state 45
     DIV   shift, and go to state 46
     EQ    shift, and go to state 47
@@ -2285,62 +2334,69 @@ State 134
     OR    shift, and go to state 56
 
 
-State 135
-
-   31 Voidable: VOID .
-
-    $default  reduce using rule 31 (Voidable)
-
-
-State 136
-
-   27 ForLoop: FOR OC Voidable . SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF
-
-    SCOMMA  shift, and go to state 142
-
-
-State 137
-
-   32 Voidable: ListOfStatem .
-   38 ListOfStatem: ListOfStatem . STOP Statement
-
-    STOP  shift, and go to state 43
-
-    $default  reduce using rule 32 (Voidable)
-
-
 State 138
 
-   29 VoidableSingleStatement: VOID .
+   33 Voidable: VOID .
 
-    $default  reduce using rule 29 (VoidableSingleStatement)
+    $default  reduce using rule 33 (Voidable)
 
 
 State 139
 
-   28 WhileLoop: WHILE OC VoidableSingleStatement . CC OF ListOfCode CF
+   29 ForLoop: FOR OC Voidable . SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF
 
-    CC  shift, and go to state 143
+    SCOMMA  shift, and go to state 146
 
 
 State 140
 
-   30 VoidableSingleStatement: Statement .
+   34 Voidable: ListOfStatem .
+   40 ListOfStatem: ListOfStatem . STOP Statement
 
-    $default  reduce using rule 30 (VoidableSingleStatement)
+    STOP  shift, and go to state 43
+
+    $default  reduce using rule 34 (Voidable)
 
 
 State 141
 
-   33 Conditional: IF OC Expression CC . OF ListOfCode CF
-   34            | IF OC Expression CC . OF ListOfCode CF Else_Block
+   31 VoidableSingleStatement: VOID .
 
-    OF  shift, and go to state 144
+    $default  reduce using rule 31 (VoidableSingleStatement)
 
 
 State 142
 
-   27 ForLoop: FOR OC Voidable SCOMMA . Expression SCOMMA Voidable CC OF ListOfCode CF
+   30 WhileLoop: WHILE OC VoidableSingleStatement . CC OF ListOfCode CF
+
+    CC  shift, and go to state 147
+
+
+State 143
+
+   32 VoidableSingleStatement: Statement .
+
+    $default  reduce using rule 32 (VoidableSingleStatement)
+
+
+State 144
+
+   28 TernaryOp: Statement QUEST Statement . COLON Statement STOP
+
+    COLON  shift, and go to state 148
+
+
+State 145
+
+   35 Conditional: IF OC Expression CC . OF ListOfCode CF
+   36            | IF OC Expression CC . OF ListOfCode CF Else_Block
+
+    OF  shift, and go to state 149
+
+
+State 146
+
+   29 ForLoop: FOR OC Voidable SCOMMA . Expression SCOMMA Voidable CC OF ListOfCode CF
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -2351,23 +2407,50 @@ State 142
     TRUE   shift, and go to state 10
     FALSE  shift, and go to state 11
 
-    Expression  go to state 145
+    Expression  go to state 150
     Location    go to state 33
     Literal     go to state 26
     MethodCall  go to state 28
 
 
-State 143
+State 147
 
-   28 WhileLoop: WHILE OC VoidableSingleStatement CC . OF ListOfCode CF
+   30 WhileLoop: WHILE OC VoidableSingleStatement CC . OF ListOfCode CF
 
-    OF  shift, and go to state 146
+    OF  shift, and go to state 151
 
 
-State 144
+State 148
 
-   33 Conditional: IF OC Expression CC OF . ListOfCode CF
-   34            | IF OC Expression CC OF . ListOfCode CF Else_Block
+   28 TernaryOp: Statement QUEST Statement COLON . Statement STOP
+
+    ARRAY  shift, and go to state 1
+    NOT    shift, and go to state 4
+    OC     shift, and go to state 5
+    ID     shift, and go to state 6
+    CHAR   shift, and go to state 7
+    INTL   shift, and go to state 8
+    SUB    shift, and go to state 9
+    TRUE   shift, and go to state 10
+    FALSE  shift, and go to state 11
+    TINT   shift, and go to state 12
+    TUINT  shift, and go to state 13
+    TCHAR  shift, and go to state 14
+    TBOOL  shift, and go to state 15
+
+    Statement       go to state 152
+    Initialization  go to state 23
+    Expression      go to state 24
+    Location        go to state 25
+    Literal         go to state 26
+    Vartype         go to state 27
+    MethodCall      go to state 28
+
+
+State 149
+
+   35 Conditional: IF OC Expression CC OF . ListOfCode CF
+   36            | IF OC Expression CC OF . ListOfCode CF Else_Block
 
     ARRAY   shift, and go to state 1
     RETURN  shift, and go to state 108
@@ -2390,14 +2473,15 @@ State 144
 
     Return          go to state 113
     Break           go to state 114
-    ListOfCode      go to state 147
+    ListOfCode      go to state 153
     Code            go to state 116
     Loop            go to state 117
-    ForLoop         go to state 118
-    WhileLoop       go to state 119
-    Conditional     go to state 120
-    ListOfStatem    go to state 121
-    Statement       go to state 22
+    TernaryOp       go to state 118
+    ForLoop         go to state 119
+    WhileLoop       go to state 120
+    Conditional     go to state 121
+    ListOfStatem    go to state 122
+    Statement       go to state 123
     Initialization  go to state 23
     Expression      go to state 24
     Location        go to state 25
@@ -2406,23 +2490,23 @@ State 144
     MethodCall      go to state 28
 
 
-State 145
+State 150
 
-   27 ForLoop: FOR OC Voidable SCOMMA Expression . SCOMMA Voidable CC OF ListOfCode CF
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   29 ForLoop: FOR OC Voidable SCOMMA Expression . SCOMMA Voidable CC OF ListOfCode CF
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
 
-    SCOMMA  shift, and go to state 148
+    SCOMMA  shift, and go to state 154
     ADD     shift, and go to state 45
     DIV     shift, and go to state 46
     EQ      shift, and go to state 47
@@ -2437,9 +2521,9 @@ State 145
     OR      shift, and go to state 56
 
 
-State 146
+State 151
 
-   28 WhileLoop: WHILE OC VoidableSingleStatement CC OF . ListOfCode CF
+   30 WhileLoop: WHILE OC VoidableSingleStatement CC OF . ListOfCode CF
 
     ARRAY   shift, and go to state 1
     RETURN  shift, and go to state 108
@@ -2462,14 +2546,15 @@ State 146
 
     Return          go to state 113
     Break           go to state 114
-    ListOfCode      go to state 149
+    ListOfCode      go to state 155
     Code            go to state 116
     Loop            go to state 117
-    ForLoop         go to state 118
-    WhileLoop       go to state 119
-    Conditional     go to state 120
-    ListOfStatem    go to state 121
-    Statement       go to state 22
+    TernaryOp       go to state 118
+    ForLoop         go to state 119
+    WhileLoop       go to state 120
+    Conditional     go to state 121
+    ListOfStatem    go to state 122
+    Statement       go to state 123
     Initialization  go to state 23
     Expression      go to state 24
     Location        go to state 25
@@ -2478,21 +2563,28 @@ State 146
     MethodCall      go to state 28
 
 
-State 147
+State 152
 
-   33 Conditional: IF OC Expression CC OF ListOfCode . CF
-   34            | IF OC Expression CC OF ListOfCode . CF Else_Block
+   28 TernaryOp: Statement QUEST Statement COLON Statement . STOP
 
-    CF  shift, and go to state 150
+    STOP  shift, and go to state 156
 
 
-State 148
+State 153
 
-   27 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA . Voidable CC OF ListOfCode CF
+   35 Conditional: IF OC Expression CC OF ListOfCode . CF
+   36            | IF OC Expression CC OF ListOfCode . CF Else_Block
+
+    CF  shift, and go to state 157
+
+
+State 154
+
+   29 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA . Voidable CC OF ListOfCode CF
 
     ARRAY  shift, and go to state 1
     NOT    shift, and go to state 4
-    VOID   shift, and go to state 135
+    VOID   shift, and go to state 138
     OC     shift, and go to state 5
     ID     shift, and go to state 6
     CHAR   shift, and go to state 7
@@ -2505,8 +2597,8 @@ State 148
     TCHAR  shift, and go to state 14
     TBOOL  shift, and go to state 15
 
-    Voidable        go to state 151
-    ListOfStatem    go to state 137
+    Voidable        go to state 158
+    ListOfStatem    go to state 140
     Statement       go to state 22
     Initialization  go to state 23
     Expression      go to state 24
@@ -2516,73 +2608,80 @@ State 148
     MethodCall      go to state 28
 
 
-State 149
-
-   28 WhileLoop: WHILE OC VoidableSingleStatement CC OF ListOfCode . CF
-
-    CF  shift, and go to state 152
-
-
-State 150
-
-   33 Conditional: IF OC Expression CC OF ListOfCode CF .
-   34            | IF OC Expression CC OF ListOfCode CF . Else_Block
-
-    ELIF  shift, and go to state 153
-    ELSE  shift, and go to state 154
-
-    $default  reduce using rule 33 (Conditional)
-
-    Else_Block  go to state 155
-
-
-State 151
-
-   27 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable . CC OF ListOfCode CF
-
-    CC  shift, and go to state 156
-
-
-State 152
-
-   28 WhileLoop: WHILE OC VoidableSingleStatement CC OF ListOfCode CF .
-
-    $default  reduce using rule 28 (WhileLoop)
-
-
-State 153
-
-   36 Else_Block: ELIF . OC Expression CC OF ListOfCode CF
-   37           | ELIF . OC Expression CC OF ListOfCode CF Else_Block
-
-    OC  shift, and go to state 157
-
-
-State 154
-
-   35 Else_Block: ELSE . OF ListOfCode CF
-
-    OF  shift, and go to state 158
-
-
 State 155
 
-   34 Conditional: IF OC Expression CC OF ListOfCode CF Else_Block .
+   30 WhileLoop: WHILE OC VoidableSingleStatement CC OF ListOfCode . CF
 
-    $default  reduce using rule 34 (Conditional)
+    CF  shift, and go to state 159
 
 
 State 156
 
-   27 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC . OF ListOfCode CF
+   28 TernaryOp: Statement QUEST Statement COLON Statement STOP .
 
-    OF  shift, and go to state 159
+    $default  reduce using rule 28 (TernaryOp)
 
 
 State 157
 
-   36 Else_Block: ELIF OC . Expression CC OF ListOfCode CF
-   37           | ELIF OC . Expression CC OF ListOfCode CF Else_Block
+   35 Conditional: IF OC Expression CC OF ListOfCode CF .
+   36            | IF OC Expression CC OF ListOfCode CF . Else_Block
+
+    ELIF  shift, and go to state 160
+    ELSE  shift, and go to state 161
+
+    $default  reduce using rule 35 (Conditional)
+
+    Else_Block  go to state 162
+
+
+State 158
+
+   29 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable . CC OF ListOfCode CF
+
+    CC  shift, and go to state 163
+
+
+State 159
+
+   30 WhileLoop: WHILE OC VoidableSingleStatement CC OF ListOfCode CF .
+
+    $default  reduce using rule 30 (WhileLoop)
+
+
+State 160
+
+   38 Else_Block: ELIF . OC Expression CC OF ListOfCode CF
+   39           | ELIF . OC Expression CC OF ListOfCode CF Else_Block
+
+    OC  shift, and go to state 164
+
+
+State 161
+
+   37 Else_Block: ELSE . OF ListOfCode CF
+
+    OF  shift, and go to state 165
+
+
+State 162
+
+   36 Conditional: IF OC Expression CC OF ListOfCode CF Else_Block .
+
+    $default  reduce using rule 36 (Conditional)
+
+
+State 163
+
+   29 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC . OF ListOfCode CF
+
+    OF  shift, and go to state 166
+
+
+State 164
+
+   38 Else_Block: ELIF OC . Expression CC OF ListOfCode CF
+   39           | ELIF OC . Expression CC OF ListOfCode CF Else_Block
 
     NOT    shift, and go to state 4
     OC     shift, and go to state 5
@@ -2593,56 +2692,15 @@ State 157
     TRUE   shift, and go to state 10
     FALSE  shift, and go to state 11
 
-    Expression  go to state 160
+    Expression  go to state 167
     Location    go to state 33
     Literal     go to state 26
     MethodCall  go to state 28
 
 
-State 158
+State 165
 
-   35 Else_Block: ELSE OF . ListOfCode CF
-
-    ARRAY   shift, and go to state 1
-    RETURN  shift, and go to state 108
-    BREAK   shift, and go to state 109
-    IF      shift, and go to state 110
-    FOR     shift, and go to state 111
-    WHILE   shift, and go to state 112
-    NOT     shift, and go to state 4
-    OC      shift, and go to state 5
-    ID      shift, and go to state 6
-    CHAR    shift, and go to state 7
-    INTL    shift, and go to state 8
-    SUB     shift, and go to state 9
-    TRUE    shift, and go to state 10
-    FALSE   shift, and go to state 11
-    TINT    shift, and go to state 12
-    TUINT   shift, and go to state 13
-    TCHAR   shift, and go to state 14
-    TBOOL   shift, and go to state 15
-
-    Return          go to state 113
-    Break           go to state 114
-    ListOfCode      go to state 161
-    Code            go to state 116
-    Loop            go to state 117
-    ForLoop         go to state 118
-    WhileLoop       go to state 119
-    Conditional     go to state 120
-    ListOfStatem    go to state 121
-    Statement       go to state 22
-    Initialization  go to state 23
-    Expression      go to state 24
-    Location        go to state 25
-    Literal         go to state 26
-    Vartype         go to state 27
-    MethodCall      go to state 28
-
-
-State 159
-
-   27 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC OF . ListOfCode CF
+   37 Else_Block: ELSE OF . ListOfCode CF
 
     ARRAY   shift, and go to state 1
     RETURN  shift, and go to state 108
@@ -2665,14 +2723,15 @@ State 159
 
     Return          go to state 113
     Break           go to state 114
-    ListOfCode      go to state 162
+    ListOfCode      go to state 168
     Code            go to state 116
     Loop            go to state 117
-    ForLoop         go to state 118
-    WhileLoop       go to state 119
-    Conditional     go to state 120
-    ListOfStatem    go to state 121
-    Statement       go to state 22
+    TernaryOp       go to state 118
+    ForLoop         go to state 119
+    WhileLoop       go to state 120
+    Conditional     go to state 121
+    ListOfStatem    go to state 122
+    Statement       go to state 123
     Initialization  go to state 23
     Expression      go to state 24
     Location        go to state 25
@@ -2681,24 +2740,66 @@ State 159
     MethodCall      go to state 28
 
 
-State 160
+State 166
 
-   36 Else_Block: ELIF OC Expression . CC OF ListOfCode CF
-   37           | ELIF OC Expression . CC OF ListOfCode CF Else_Block
-   52 Expression: Expression . ADD Expression
-   53           | Expression . SUB Expression
-   54           | Expression . MULT Expression
-   55           | Expression . DIV Expression
-   56           | Expression . LEQ Expression
-   57           | Expression . GEQ Expression
-   58           | Expression . GT Expression
-   59           | Expression . EQ Expression
-   60           | Expression . LT Expression
-   61           | Expression . NEQ Expression
-   62           | Expression . AND Expression
-   63           | Expression . OR Expression
+   29 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC OF . ListOfCode CF
 
-    CC    shift, and go to state 163
+    ARRAY   shift, and go to state 1
+    RETURN  shift, and go to state 108
+    BREAK   shift, and go to state 109
+    IF      shift, and go to state 110
+    FOR     shift, and go to state 111
+    WHILE   shift, and go to state 112
+    NOT     shift, and go to state 4
+    OC      shift, and go to state 5
+    ID      shift, and go to state 6
+    CHAR    shift, and go to state 7
+    INTL    shift, and go to state 8
+    SUB     shift, and go to state 9
+    TRUE    shift, and go to state 10
+    FALSE   shift, and go to state 11
+    TINT    shift, and go to state 12
+    TUINT   shift, and go to state 13
+    TCHAR   shift, and go to state 14
+    TBOOL   shift, and go to state 15
+
+    Return          go to state 113
+    Break           go to state 114
+    ListOfCode      go to state 169
+    Code            go to state 116
+    Loop            go to state 117
+    TernaryOp       go to state 118
+    ForLoop         go to state 119
+    WhileLoop       go to state 120
+    Conditional     go to state 121
+    ListOfStatem    go to state 122
+    Statement       go to state 123
+    Initialization  go to state 23
+    Expression      go to state 24
+    Location        go to state 25
+    Literal         go to state 26
+    Vartype         go to state 27
+    MethodCall      go to state 28
+
+
+State 167
+
+   38 Else_Block: ELIF OC Expression . CC OF ListOfCode CF
+   39           | ELIF OC Expression . CC OF ListOfCode CF Else_Block
+   54 Expression: Expression . ADD Expression
+   55           | Expression . SUB Expression
+   56           | Expression . MULT Expression
+   57           | Expression . DIV Expression
+   58           | Expression . LEQ Expression
+   59           | Expression . GEQ Expression
+   60           | Expression . GT Expression
+   61           | Expression . EQ Expression
+   62           | Expression . LT Expression
+   63           | Expression . NEQ Expression
+   64           | Expression . AND Expression
+   65           | Expression . OR Expression
+
+    CC    shift, and go to state 170
     ADD   shift, and go to state 45
     DIV   shift, and go to state 46
     EQ    shift, and go to state 47
@@ -2713,46 +2814,46 @@ State 160
     OR    shift, and go to state 56
 
 
-State 161
+State 168
 
-   35 Else_Block: ELSE OF ListOfCode . CF
+   37 Else_Block: ELSE OF ListOfCode . CF
 
-    CF  shift, and go to state 164
-
-
-State 162
-
-   27 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode . CF
-
-    CF  shift, and go to state 165
+    CF  shift, and go to state 171
 
 
-State 163
+State 169
 
-   36 Else_Block: ELIF OC Expression CC . OF ListOfCode CF
-   37           | ELIF OC Expression CC . OF ListOfCode CF Else_Block
+   29 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode . CF
 
-    OF  shift, and go to state 166
-
-
-State 164
-
-   35 Else_Block: ELSE OF ListOfCode CF .
-
-    $default  reduce using rule 35 (Else_Block)
+    CF  shift, and go to state 172
 
 
-State 165
+State 170
 
-   27 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF .
+   38 Else_Block: ELIF OC Expression CC . OF ListOfCode CF
+   39           | ELIF OC Expression CC . OF ListOfCode CF Else_Block
 
-    $default  reduce using rule 27 (ForLoop)
+    OF  shift, and go to state 173
 
 
-State 166
+State 171
 
-   36 Else_Block: ELIF OC Expression CC OF . ListOfCode CF
-   37           | ELIF OC Expression CC OF . ListOfCode CF Else_Block
+   37 Else_Block: ELSE OF ListOfCode CF .
+
+    $default  reduce using rule 37 (Else_Block)
+
+
+State 172
+
+   29 ForLoop: FOR OC Voidable SCOMMA Expression SCOMMA Voidable CC OF ListOfCode CF .
+
+    $default  reduce using rule 29 (ForLoop)
+
+
+State 173
+
+   38 Else_Block: ELIF OC Expression CC OF . ListOfCode CF
+   39           | ELIF OC Expression CC OF . ListOfCode CF Else_Block
 
     ARRAY   shift, and go to state 1
     RETURN  shift, and go to state 108
@@ -2775,14 +2876,15 @@ State 166
 
     Return          go to state 113
     Break           go to state 114
-    ListOfCode      go to state 167
+    ListOfCode      go to state 174
     Code            go to state 116
     Loop            go to state 117
-    ForLoop         go to state 118
-    WhileLoop       go to state 119
-    Conditional     go to state 120
-    ListOfStatem    go to state 121
-    Statement       go to state 22
+    TernaryOp       go to state 118
+    ForLoop         go to state 119
+    WhileLoop       go to state 120
+    Conditional     go to state 121
+    ListOfStatem    go to state 122
+    Statement       go to state 123
     Initialization  go to state 23
     Expression      go to state 24
     Location        go to state 25
@@ -2791,29 +2893,29 @@ State 166
     MethodCall      go to state 28
 
 
-State 167
+State 174
 
-   36 Else_Block: ELIF OC Expression CC OF ListOfCode . CF
-   37           | ELIF OC Expression CC OF ListOfCode . CF Else_Block
+   38 Else_Block: ELIF OC Expression CC OF ListOfCode . CF
+   39           | ELIF OC Expression CC OF ListOfCode . CF Else_Block
 
-    CF  shift, and go to state 168
-
-
-State 168
-
-   36 Else_Block: ELIF OC Expression CC OF ListOfCode CF .
-   37           | ELIF OC Expression CC OF ListOfCode CF . Else_Block
-
-    ELIF  shift, and go to state 153
-    ELSE  shift, and go to state 154
-
-    $default  reduce using rule 36 (Else_Block)
-
-    Else_Block  go to state 169
+    CF  shift, and go to state 175
 
 
-State 169
+State 175
 
-   37 Else_Block: ELIF OC Expression CC OF ListOfCode CF Else_Block .
+   38 Else_Block: ELIF OC Expression CC OF ListOfCode CF .
+   39           | ELIF OC Expression CC OF ListOfCode CF . Else_Block
 
-    $default  reduce using rule 37 (Else_Block)
+    ELIF  shift, and go to state 160
+    ELSE  shift, and go to state 161
+
+    $default  reduce using rule 38 (Else_Block)
+
+    Else_Block  go to state 176
+
+
+State 176
+
+   39 Else_Block: ELIF OC Expression CC OF ListOfCode CF Else_Block .
+
+    $default  reduce using rule 39 (Else_Block)
