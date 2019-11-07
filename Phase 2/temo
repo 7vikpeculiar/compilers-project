@@ -1,0 +1,9 @@
+int a = -3
+def a(int a)
+{
+  if(2)
+  {
+    a
+  }
+else{b}
+}
