@@ -1,0 +1,37 @@
+array int a[100000]
+
+def permute(int l, int r)
+{
+   int i.
+   int temp
+   if (l == r)
+    {print(a[l])}
+   else
+   {
+       for (i = l; i <= r; i=i+1)
+       {
+          temp = a[l].
+          a[l] = a[i].
+          a[i] = temp.
+
+          permute(l+1, r).
+
+          temp = a[l].
+          a[l] = a[i].
+          a[i] = temp
+       }
+   }
+   return void .
+}
+def main(void)
+{
+    int n.
+    int i.
+    scan(n)
+    for(i=0; i < n; i=i+1)
+    {
+        a[i] = i
+    }
+    permute(1, n)
+    return void.
+}

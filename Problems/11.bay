@@ -1,0 +1,25 @@
+import file.
+def main(void)
+{
+  array char FilePath[200].
+  array char FileContent[10000].
+  print("F").
+  scan(FilePath).
+  FileContent = read(FilePath).
+  FilePath = len(FileContent).
+  array int CharHist[MAXCHAR].
+  int i
+  for(i=0;i<MAXCHAR;i=i+1)
+  {
+    CharHist[i] = 0
+  }
+  for(i=0;i<len;i=i+1)
+  {
+    CharHist[FileContent[i]] = CharHist[FileContent[i]] + 1
+  }
+  for(i=0;i<MAXCHAR;i=i+1)
+  {
+    char j = i.
+    print(j, CharHist[i])
+  }
+}

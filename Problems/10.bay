@@ -1,0 +1,59 @@
+def main(void)
+{
+	int i.
+	int j.
+	int k.
+
+	int r1.
+	int c1.
+	int r2.
+	int c2.
+
+	array int a[1000,1000].
+	array int b[1000,1000].
+	array int c[1000,1000].
+
+	scan(r1,c1,r2,c2)
+
+	if(c1==r2)
+	{
+		for(i=0;i<r1;i=i+1)
+		{
+			for(j=0;j<c1;j=j+1)
+			{
+				scan(a[i,j])
+			}
+		}
+		for(i=0;i<r2;i=i+1)
+		{
+			for(j=0;j<c2;j=j+1)
+			{
+				scan(b[i,j])
+			}
+		}
+		for(i=0;i<r1;i=i+1)
+		{
+			for(j=0;j<c2;j=j+1)
+			{
+				c[i,j] = 0
+				for(k=0;k<c1;k=k+1)
+				{
+					c[i,j]=c[i,j]+a[i,k]*b[k,j]
+				}
+			}
+		}
+		for(i=0;i<r1;i=i+1)
+		{
+			for(j=0;j<c2;j=j+1)
+			{
+				print(c[i,j],"-")
+			}
+			print("\n")
+		}
+	}
+	else
+	{
+		print("N")
+	}
+	return void.
+}

@@ -1,0 +1,41 @@
+def floorSqrt(int num)
+{
+	int i = 1.
+	int result = 1
+	if(num == 0 or num == 1)
+	{
+    	return num.
+  }
+  while(result <= num)
+  {
+		i=i+1.
+    result = i * i
+  }
+  return i-1.
+}
+
+
+def main(void)
+{
+int n.
+scan(n).
+int i.
+bool b = True
+for(i=2;i<floorSqrt(n);i=i+1)
+{
+	if(n/i==0)
+	{
+		b = False
+		break.
+	}
+}
+	if(b==True)
+	{
+		print(n)
+	}
+	else
+	{
+		print(n)
+	}
+	return void .
+}

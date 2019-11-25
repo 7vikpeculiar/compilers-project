@@ -1,0 +1,107 @@
+array char FileContent[100000].
+
+array char dict[1000,20].
+
+array int wordSizes[1000].
+array bool unique[1000].
+
+array char word[20].
+array char FilePath[100].
+
+int dictlen = 0
+def AddToList(int wordPoint)
+{
+  int i = 0
+  while(i < dictlen)
+  {
+    if(EqualTo(i,wordPoint))
+    {
+      unique[i] = false
+      return void .
+    }
+    i=i+1
+  }
+  for(i=0;i<wordPoint;i=i+1)
+  {
+    dict[dictlen,i] = word[i]
+  }
+  unique[dictlen] = true.
+  wordSizes[dictlen] = wordPoint.
+  dictlen = dictlen + 1
+}
+
+
+
+def EqualTo(int id1, int wordPoint)
+{
+  if(wordPoint == wordSizes[id1])
+  {
+    int i
+    for(i=0;i<wordPoint;i=i+1)
+    {
+      if(wordSizes[id1,i] != word[i])
+      {
+        return false.
+      }
+    }
+    return true.
+  }
+  return false.
+}
+
+def AddToList(int wordPoint)
+{
+  int i = 0
+  while(i < dictlen)
+  {
+    if(EqualTo(i,wordPoint))
+    {
+      unique[i] = false
+      return void .
+    }
+    i=i+1
+  }
+  for(i=0;i<wordPoint;i=i+1)
+  {
+    dict[dictlen,i] = word[i]
+  }
+  unique[dictlen] = true.
+  wordSizes[dictlen] = wordPoint.
+  dictlen = dictlen + 1
+}
+
+def main(void)
+{
+int len.
+FileContent = read(FilePath).
+len = length(FileContent).
+point =  0.
+wordPoint = 0
+while(point < len)
+{
+  if(FileContent[point] == 0)
+  {
+    AddToList(wordPoint).
+    wordPoint = 0
+  }
+  else{
+  word[wordPoint] = FileContent[point].
+  wordPoint = wordPoint + 1
+  }
+  point = point + 1
+}
+int i
+
+  for(i = 0; i < dictlen; i=i+1)
+  {
+    if(unique[i])
+    {
+      for(j = 0; j < wordSizes[i] ; j=j+1)
+      {
+        print(dict[i,j])
+      }
+    }
+    print('-')
+  }
+  return void .
+}

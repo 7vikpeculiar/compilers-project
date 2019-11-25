@@ -35,6 +35,7 @@ def {return DEF;}
 "-"  {return SUB;}
 "*"  {return MULT;}
 "/"  {return DIV;}
+"\%" {return MOD;}
 "<=" {return LEQ;}
 ">=" {return GEQ;}
 "==" {return EQ;}
@@ -70,7 +71,6 @@ not {return NOT; /* [\+\-\*%] {return ARITOP;} (<=|>=|!=|>|<) {return RELOP;} */
 [a-zA-Z][a-zA-Z0-9]* { yylval.node = new SingleId(yytext); return ID;}
 
 \'.\'|\".\" {yylval.node = new CharLiteral(yytext[1]); return CHAR;}
-
 [0-9][0-9]* {yylval.node = new IntLiteral(atoi(yytext)); return INTL;}
 
 "0x"[0-9][0-9]* {yylval.node = new UintLiteral(yytext); return UINTL;}

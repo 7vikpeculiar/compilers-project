@@ -13,7 +13,7 @@
 %token ARRAY RETURN BREAK IMPORT IF ELIF ELSE FOR WHILE DEF
 %token NOT SCOMMA COMMA
 %token OF CF OC CC OS CS QUEST COLON
-%token ADD DIV EQ GEQ GT LEQ LT MULT NEQ SUB AND OR
+%token ADD DIV EQ GEQ GT LEQ LT MULT NEQ SUB AND OR MOD
 
 %token <node> INTL UINTL
 %token <node> CHAR
@@ -35,7 +35,7 @@
 %left EXPRESSIONVSEXPRESSION
 %left EXPRESSIONVSLOCASGNEXP
 %left ADD SUB
-%left MULT DIV
+%left MULT DIV MOD
 %left EQ GEQ LEQ LT GT NEQ
 %left AND OR
 %right NOT
@@ -152,6 +152,7 @@ Expression : Location 							     { $$ = $1; cout << "Location" << endl;}
 					 | Expression SUB Expression   { $$ = new BiExprNode($1, $3, "sub");  cout << "Expr - Expr"<< endl;}
 					 | Expression MULT Expression  { $$ = new BiExprNode($1, $3, "mult"); cout << "Expr * Expr"<< endl;}
 					 | Expression DIV Expression   { $$ = new BiExprNode($1, $3, "div");  cout << "Expr / Expr" << endl;}
+					 | Expression MOD Expression   { $$ = new BiExprNode($1, $3, "mod");  cout << "Expr mod Expr" << endl;}
 					 | Expression LEQ Expression   { $$ = new BiExprNode($1, $3, "leq");  cout << "Expr <= Expr" << endl;}
 					 | Expression GEQ Expression   { $$ = new BiExprNode($1, $3, "geq");  cout << "Expr >= Expr" << endl;}
 					 | Expression GT Expression    { $$ = new BiExprNode($1, $3, "gt");   cout << "Expr > Expr" << endl;}

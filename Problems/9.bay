@@ -1,0 +1,36 @@
+array int globArr1[10000,10000].
+array int globArr2[10000,10000]
+
+
+def main(void)
+{
+    int m.
+    int n.
+    scan(m).
+    scan(n).
+    int i.
+    int j
+    for(i=0;i<m;i=i+1)
+  {
+    for(j=0;j<n;j=j+1)
+    {
+       scan(globArr1[m,n])
+    }
+  }
+  for(i=0;i<m;i=i+1)
+  {
+    for(j=0;j<n;j=j+1)
+    {
+       scan(globArr2[m,n])
+    }
+  }
+  for(i=0;i<m;i=i+1)
+  {
+    for(j=0;j<n;j=j+1)
+    {
+      print(globArr1[m,n] + globArr2[m,n])
+    }
+  }
+  return void .
+
+}

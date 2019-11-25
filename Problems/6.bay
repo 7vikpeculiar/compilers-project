@@ -1,0 +1,28 @@
+array int globArr[1000000]
+def main(void)
+{
+	int n.
+	int i.
+	int j.
+	int swap.
+	scan(n)
+	for(i=0;i<n;i=i+1)
+	{
+		scan(globArr[i])
+	}
+	for(i=1;i<=n-1;i=i+1){
+		j = i
+		while(j>0 and globArr[j-1]>globArr[j])
+		{
+			swap = globArr[j].
+			globArr[j] = globArr[j-1].
+			globArr[j-1] = swap.
+			j=j-1
+		}
+	}
+	for(i=0;i<=n-1;i=i+1)
+	{
+		print(globArr[i])
+	}
+  	return void .
+}

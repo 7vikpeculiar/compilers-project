@@ -575,7 +575,7 @@ public:
     {
         cout << "ForNode:: " << endl;
         cout << "ForExp:: ";
-        cout << "ForInit :" ; initfvisit(); cout << endl;
+        cout << "ForInit :" ; init->visit(); cout << endl;
         cout << "ForCond :"; cond->visit(); cout << endl;
         cout << "ForIncr :";
         incr->visit(); cout << endl;

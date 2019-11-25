@@ -1,0 +1,78 @@
+array int globArr[1000000]
+
+def countSort(int n, int exp)
+{
+	array int output[n].
+	int i.
+  array int count[n]
+  for(i = 0; i < 10;i=i+1)
+  {
+    count[i] = 0
+  }
+
+	for (i = 0; i < n; i=i+1)
+		{
+    count[ (globArr[i]/exp)%10 ] = 1 + count[ (globArr[i]/exp)%10 ]
+    }
+	for (i = 1; i < 10; i=i+1)
+		{count[i] = count[i] +  count[i - 1]}
+
+	for (i = n - 1; i >= 0; i=i-1)
+	{
+		output[count[ (globArr[i]/exp)%10 ] - 1] = globArr[i].
+		count[ (globArr[i]/exp)%10 ]=count[ (globArr[i]/exp)%10 ] -1
+	}
+
+	for (i = 0; i < n; i=i+1)
+		{globArr[i] = output[i]}
+
+	return void.
+}
+
+def getMax(int n)
+{
+	int mx = globArr[0].
+  int i
+  for (i = 1; i < n; i=i+1)
+  {
+		if (globArr[i] > mx)
+		{
+			mx = globArr[i]
+		}
+  }
+	return mx.
+}
+
+def print(int n)
+{
+	for (int i = 0; i < n; i=i+1)
+	{
+    print(globArr[i], "-")
+  }
+	return void.
+}
+
+def radixsort(int n)
+{
+	int m = getMax(n)
+  int exp
+
+	for (exp = 1; m/exp > 0; exp =exp* 10)
+		{countSort(n, exp)}
+	return void .
+}
+
+
+def main(void)
+{
+  int n.
+  scan(n).
+  int i
+  for(i=0;i<n;i=i+1)
+  {
+    scan(globArr[i])
+  }
+	radixsort(n).
+	printArr(n)
+	return void .
+}
