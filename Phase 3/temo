@@ -1,0 +1,5 @@
+int a.
+a = 2.
+int b = a + 3.
+bool e = True.
+bool f = True and e
