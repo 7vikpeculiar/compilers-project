@@ -132,25 +132,59 @@ node AssignmentNode::interpret()
 { 
   SingleId *pd = dynamic_cast<SingleId*>(location);
   node expr_val = expr->interpret();
-  if(asgn_op == string("="))
+  if(pd!= NULL)
   {
-    global_table.update_var(pd->value,expr_val);
-    return global_table.get_var(pd->value);
+    if(asgn_op == string("="))
+    {
+      global_table.update_var(pd->value,expr_val);
+      return global_table.get_var(pd->value);
+    }
+    if(asgn_op == string("+="))
+    {
+      node var_value = global_table.get_var(pd->value);
+      var_value += expr_val;
+      global_table.update_var(pd->value,var_value);
+      return global_table.get_var(pd->value);
+    }
+    if(asgn_op == string("-="))
+    {
+      node var_value = global_table.get_var(pd->value);
+      var_value -= expr_val;
+      global_table.update_var(pd->value,var_value);
+      return global_table.get_var(pd->value);
+    }
   }
-  if(asgn_op == string("+="))
+
+  OneDArray * ad = dynamic_cast<OneDArray*>(location);
+  if(ad!= NULL)
   {
-    node var_value = global_table.get_var(pd->value);
-    var_value += expr_val;
-    global_table.update_var(pd->value,var_value);
-    return global_table.get_var(pd->value);
+    node row_val = ad->row->interpret();
+    if(row_val.type != tint)
+    {
+      genError("Invalid array index");
+    }
+    SingleId *pd = dynamic_cast<SingleId*>(ad->id);
+    if(asgn_op == string("="))
+    {
+      global_table.update_array(pd->value,expr_val,row_val.i);
+      return global_table.get_array(pd->value,row_val.i);
+    }
+    if(asgn_op == string("+="))
+    {
+      node var_value = global_table.get_array(pd->value,row_val.i);
+      var_value += expr_val;
+      global_table.update_array(pd->value,var_value,row_val.i);
+      return global_table.get_var(pd->value);
+    }
+    if(asgn_op == string("-="))
+    {
+      node var_value = global_table.get_array(pd->value,row_val.i);
+      var_value -= expr_val;
+      global_table.update_array(pd->value,var_value,row_val.i);
+      return global_table.get_var(pd->value);
+    }
   }
-  if(asgn_op == string("-="))
-  {
-    node var_value = global_table.get_var(pd->value);
-    var_value -= expr_val;
-    global_table.update_var(pd->value,var_value);
-    return global_table.get_var(pd->value);
-  }
+  return node();
 }
 
 node StatementsNode::interpret()
@@ -342,8 +376,6 @@ node MethodCallNode::interpret()
 {
   SingleId *pd = dynamic_cast<SingleId*>(id);
   Symbol_table temp_table = global_table;
-  FunctionNode* method = method_table.get_function(pd->value);
- 
   vector <node> param_vector;
   if(params != NULL)
   {
@@ -354,6 +386,17 @@ node MethodCallNode::interpret()
       param_vector.push_back(x->interpret());
     }  
   }
+  if(pd->value == string("print"))
+  {
+    cout << "Print Output : ";
+    for(int i=0; i < param_vector.size();i++)
+    {
+      cout << param_vector[i] << " ";
+    }
+    cout << endl;
+    return node();
+  }
+   FunctionNode* method = method_table.get_function(pd->value);
   global_table.table.clear(); 
 
   node lengthofargs = method->args->interpret();
@@ -386,6 +429,30 @@ node MethodCallNode::interpret()
   global_table.print();
   cout << "--------------" << endl;
   return result;
+}
+
+node OneDArray::interpret()
+{
+  SingleId *pd = dynamic_cast<SingleId*>(id);
+  node row_expr = row->interpret();
+  if(row_expr.type != tint)
+  {
+    genError("Invalid array Index");
+  }
+  return global_table.get_array(pd->value,row_expr.i);
+  //return node();
+}
+
+node OneDInitNode::interpret()
+{
+  SingleId *pd = dynamic_cast<SingleId*>(id);
+  node row_val = row->interpret();
+  if(row_val.type != tint)
+  {
+    genError("Invalid Index");
+  }
+  global_table.create_array(pd->value,stot(type),row_val.i);
+  return node();
 }
 
 // virtual out_type OneDArray::interpret()

@@ -497,16 +497,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    57,    57,    71,    72,    73,    74,    77,    78,    81,
-      83,    84,    86,    88,    89,    92,    93,    96,    97,   100,
-     101,   102,   103,   104,   105,   108,   109,   112,   114,   116,
-     118,   119,   121,   123,   124,   127,   128,   131,   132,   135,
-     136,   137,   140,   142,   144,   145,   147,   148,   149,   150,
-     153,   154,   155,   158,   159,   160,   163,   164,   165,   166,
-     167,   168,   169,   170,   171,   172,   173,   174,   175,   176,
-     177,   178,   179,   180,   181,   184,   185,   186,   189,   190,
-     191,   192,   193,   196,   197,   198,   199,   201,   202,   205,
-     206
+       0,    57,    57,    74,    75,    76,    77,    80,    81,    84,
+      86,    87,    89,    91,    92,    95,    96,    99,   100,   103,
+     104,   105,   106,   107,   108,   111,   112,   115,   117,   119,
+     121,   122,   124,   126,   127,   130,   131,   134,   135,   138,
+     139,   140,   143,   145,   147,   148,   150,   151,   152,   153,
+     156,   157,   158,   161,   162,   163,   166,   167,   168,   169,
+     170,   171,   172,   173,   174,   175,   176,   177,   178,   179,
+     180,   181,   182,   183,   184,   187,   188,   189,   192,   193,
+     194,   195,   196,   199,   200,   201,   202,   204,   205,   208,
+     209
 };
 #endif
 
@@ -1521,543 +1521,546 @@ yyreduce:
 												cout << "------Symbol_table------" << endl;
 												global_table.print();
 												cout << "------------------------" << endl;
+												cout << "------Array_table------" << endl;
+												global_table.array_print();
+												cout << "------------------------" << endl;
 												cout << "------Function_Table------" << endl;
 												method_table.print();
 												cout << "------------------------" << endl;
 												}
-#line 1529 "parser.tab.c" /* yacc.c:1646  */
+#line 1532 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 71 "parser.y" /* yacc.c:1646  */
+#line 74 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new FileNode((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); cout << "Imports + GlobalDecs + Funcs" << endl;}
-#line 1535 "parser.tab.c" /* yacc.c:1646  */
+#line 1538 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 72 "parser.y" /* yacc.c:1646  */
+#line 75 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new FileNode(NULL, (yyvsp[-1].node), (yyvsp[0].node)); cout << "GlobalDecs + Functions" << endl;}
-#line 1541 "parser.tab.c" /* yacc.c:1646  */
+#line 1544 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 73 "parser.y" /* yacc.c:1646  */
+#line 76 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new FileNode(NULL, NULL, (yyvsp[0].node)); cout << "Funcs" << endl;}
-#line 1547 "parser.tab.c" /* yacc.c:1646  */
+#line 1550 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 74 "parser.y" /* yacc.c:1646  */
+#line 77 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new FileNode((yyvsp[-1].node), NULL, (yyvsp[0].node)); cout << "Imports + Funcs" << endl;}
-#line 1553 "parser.tab.c" /* yacc.c:1646  */
+#line 1556 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 77 "parser.y" /* yacc.c:1646  */
+#line 80 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new ImportsListNode((yyvsp[0].node)); cout << "Import" << endl;}
-#line 1559 "parser.tab.c" /* yacc.c:1646  */
+#line 1562 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 78 "parser.y" /* yacc.c:1646  */
+#line 81 "parser.y" /* yacc.c:1646  */
     { (yyval.node)->pb((yyvsp[0].node)); cout << "List Of Imports" << endl;}
-#line 1565 "parser.tab.c" /* yacc.c:1646  */
+#line 1568 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 81 "parser.y" /* yacc.c:1646  */
+#line 84 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[-1].node);}
-#line 1571 "parser.tab.c" /* yacc.c:1646  */
+#line 1574 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 83 "parser.y" /* yacc.c:1646  */
+#line 86 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new FunctionListNode((yyvsp[0].node)); cout << "Single Function" << endl;}
-#line 1577 "parser.tab.c" /* yacc.c:1646  */
+#line 1580 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 84 "parser.y" /* yacc.c:1646  */
+#line 87 "parser.y" /* yacc.c:1646  */
     {(yyval.node)->pb((yyvsp[0].node)); cout << "List of Functions" << endl;}
-#line 1583 "parser.tab.c" /* yacc.c:1646  */
+#line 1586 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 86 "parser.y" /* yacc.c:1646  */
+#line 89 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new FunctionNode((yyvsp[-6].node),(yyvsp[-4].node),(yyvsp[-1].node)); cout << "Function" << endl;}
-#line 1589 "parser.tab.c" /* yacc.c:1646  */
+#line 1592 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 88 "parser.y" /* yacc.c:1646  */
+#line 91 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new ArgListNode(new SingleInitNode((yyvsp[0].node),std::string((yyvsp[-1].value)))); cout << "TYPE ID" << endl;}
-#line 1595 "parser.tab.c" /* yacc.c:1646  */
+#line 1598 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 89 "parser.y" /* yacc.c:1646  */
+#line 92 "parser.y" /* yacc.c:1646  */
     {(yyval.node)->pb(new SingleInitNode((yyvsp[0].node),std::string((yyvsp[-1].value)))); cout << "List of Vartype ID" << endl;}
-#line 1601 "parser.tab.c" /* yacc.c:1646  */
+#line 1604 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 92 "parser.y" /* yacc.c:1646  */
+#line 95 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node);}
-#line 1607 "parser.tab.c" /* yacc.c:1646  */
+#line 1610 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 93 "parser.y" /* yacc.c:1646  */
+#line 96 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node);}
-#line 1613 "parser.tab.c" /* yacc.c:1646  */
+#line 1616 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 96 "parser.y" /* yacc.c:1646  */
+#line 99 "parser.y" /* yacc.c:1646  */
     {cout << "LC -< C" << endl; (yyval.node) = new CodesNode((yyvsp[0].node));}
-#line 1619 "parser.tab.c" /* yacc.c:1646  */
+#line 1622 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 97 "parser.y" /* yacc.c:1646  */
+#line 100 "parser.y" /* yacc.c:1646  */
     {(yyval.node)->pb((yyvsp[0].node));}
-#line 1625 "parser.tab.c" /* yacc.c:1646  */
+#line 1628 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 100 "parser.y" /* yacc.c:1646  */
+#line 103 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "Code" << endl;}
-#line 1631 "parser.tab.c" /* yacc.c:1646  */
+#line 1634 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 101 "parser.y" /* yacc.c:1646  */
+#line 104 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "If-Else" << endl;}
-#line 1637 "parser.tab.c" /* yacc.c:1646  */
+#line 1640 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 102 "parser.y" /* yacc.c:1646  */
+#line 105 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "Loop" << endl;}
-#line 1643 "parser.tab.c" /* yacc.c:1646  */
+#line 1646 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 103 "parser.y" /* yacc.c:1646  */
+#line 106 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "Return" << endl;}
-#line 1649 "parser.tab.c" /* yacc.c:1646  */
+#line 1652 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 104 "parser.y" /* yacc.c:1646  */
+#line 107 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "Break" << endl;}
-#line 1655 "parser.tab.c" /* yacc.c:1646  */
+#line 1658 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 105 "parser.y" /* yacc.c:1646  */
+#line 108 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "Ternary Op" << endl;}
-#line 1661 "parser.tab.c" /* yacc.c:1646  */
+#line 1664 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 108 "parser.y" /* yacc.c:1646  */
+#line 111 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "For" << endl;}
-#line 1667 "parser.tab.c" /* yacc.c:1646  */
+#line 1670 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 109 "parser.y" /* yacc.c:1646  */
+#line 112 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "While" << endl;}
-#line 1673 "parser.tab.c" /* yacc.c:1646  */
+#line 1676 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 112 "parser.y" /* yacc.c:1646  */
+#line 115 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new TernaryNode((yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node)); cout << "Tern Expr" << endl;}
-#line 1679 "parser.tab.c" /* yacc.c:1646  */
+#line 1682 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 114 "parser.y" /* yacc.c:1646  */
+#line 117 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new ForNode((yyvsp[-8].node),(yyvsp[-6].node),(yyvsp[-4].node),(yyvsp[-1].node));}
-#line 1685 "parser.tab.c" /* yacc.c:1646  */
+#line 1688 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 116 "parser.y" /* yacc.c:1646  */
+#line 119 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new WhileNode((yyvsp[-4].node),(yyvsp[-1].node));}
-#line 1691 "parser.tab.c" /* yacc.c:1646  */
+#line 1694 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 118 "parser.y" /* yacc.c:1646  */
+#line 121 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new ReturnNode((yyvsp[-1].node));}
-#line 1697 "parser.tab.c" /* yacc.c:1646  */
+#line 1700 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 119 "parser.y" /* yacc.c:1646  */
+#line 122 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new ReturnNode((yyvsp[-1].node));}
-#line 1703 "parser.tab.c" /* yacc.c:1646  */
+#line 1706 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 121 "parser.y" /* yacc.c:1646  */
+#line 124 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BreakNode(); cout << "Break" << endl;}
-#line 1709 "parser.tab.c" /* yacc.c:1646  */
+#line 1712 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 123 "parser.y" /* yacc.c:1646  */
+#line 126 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node);}
-#line 1715 "parser.tab.c" /* yacc.c:1646  */
+#line 1718 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 124 "parser.y" /* yacc.c:1646  */
+#line 127 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node);}
-#line 1721 "parser.tab.c" /* yacc.c:1646  */
+#line 1724 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 127 "parser.y" /* yacc.c:1646  */
+#line 130 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "VOID" << endl;}
-#line 1727 "parser.tab.c" /* yacc.c:1646  */
+#line 1730 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 128 "parser.y" /* yacc.c:1646  */
+#line 131 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "Voidable -> ListOfCode" << endl;}
-#line 1733 "parser.tab.c" /* yacc.c:1646  */
+#line 1736 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 131 "parser.y" /* yacc.c:1646  */
+#line 134 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new ConditionNode((yyvsp[-4].node),(yyvsp[-1].node)); cout << "If{*}" << endl;}
-#line 1739 "parser.tab.c" /* yacc.c:1646  */
+#line 1742 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 132 "parser.y" /* yacc.c:1646  */
+#line 135 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new ConditionNode((yyvsp[-5].node), (yyvsp[-2].node), (yyvsp[0].node)); cout << "If-El*" << endl;}
-#line 1745 "parser.tab.c" /* yacc.c:1646  */
+#line 1748 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 135 "parser.y" /* yacc.c:1646  */
+#line 138 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new ElseBlockNode((yyvsp[0].node));}
-#line 1751 "parser.tab.c" /* yacc.c:1646  */
+#line 1754 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 136 "parser.y" /* yacc.c:1646  */
+#line 139 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new ElseBlockNode(); (yyval.node)->pb((yyvsp[0].node));}
-#line 1757 "parser.tab.c" /* yacc.c:1646  */
+#line 1760 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 137 "parser.y" /* yacc.c:1646  */
+#line 140 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); (yyval.node)->pb((yyvsp[-1].node)); cout << "Elif*" << endl;}
-#line 1763 "parser.tab.c" /* yacc.c:1646  */
+#line 1766 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 140 "parser.y" /* yacc.c:1646  */
+#line 143 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new ElseIfNode((yyvsp[-4].node), (yyvsp[-1].node));}
-#line 1769 "parser.tab.c" /* yacc.c:1646  */
+#line 1772 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 142 "parser.y" /* yacc.c:1646  */
+#line 145 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new ElseNode((yyvsp[-1].node));}
-#line 1775 "parser.tab.c" /* yacc.c:1646  */
+#line 1778 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 144 "parser.y" /* yacc.c:1646  */
+#line 147 "parser.y" /* yacc.c:1646  */
     { (yyval.node)->pb((yyvsp[0].node)); cout << "S |n S" << endl;}
-#line 1781 "parser.tab.c" /* yacc.c:1646  */
+#line 1784 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 145 "parser.y" /* yacc.c:1646  */
+#line 148 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new StatementsNode((yyvsp[0].node)); cout << "Statement" << endl;}
-#line 1787 "parser.tab.c" /* yacc.c:1646  */
+#line 1790 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 147 "parser.y" /* yacc.c:1646  */
+#line 150 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "S->Expression" << endl;}
-#line 1793 "parser.tab.c" /* yacc.c:1646  */
+#line 1796 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 148 "parser.y" /* yacc.c:1646  */
+#line 151 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new AssignmentNode((yyvsp[-2].node),std::string((yyvsp[-1].value)),(yyvsp[0].node)); cout << "Loc = Expr" << endl;}
-#line 1799 "parser.tab.c" /* yacc.c:1646  */
+#line 1802 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 149 "parser.y" /* yacc.c:1646  */
+#line 152 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new InitAssignmentNode((yyvsp[-2].node),std::string((yyvsp[-1].value)),(yyvsp[0].node),std::string((yyvsp[-3].value))); cout << "Type Id = Expr" << endl;}
-#line 1805 "parser.tab.c" /* yacc.c:1646  */
+#line 1808 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 150 "parser.y" /* yacc.c:1646  */
+#line 153 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "INIT" << endl;}
-#line 1811 "parser.tab.c" /* yacc.c:1646  */
+#line 1814 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 153 "parser.y" /* yacc.c:1646  */
+#line 156 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new SingleInitNode((yyvsp[0].node),std::string((yyvsp[-1].value)));}
-#line 1817 "parser.tab.c" /* yacc.c:1646  */
+#line 1820 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 154 "parser.y" /* yacc.c:1646  */
+#line 157 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new OneDInitNode((yyvsp[-3].node),(yyvsp[-1].node),std::string((yyvsp[-4].value))) ;cout << "1d array init" << endl;}
-#line 1823 "parser.tab.c" /* yacc.c:1646  */
+#line 1826 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 155 "parser.y" /* yacc.c:1646  */
+#line 158 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new TwoDInitNode((yyvsp[-5].node),(yyvsp[-3].node),(yyvsp[-1].node),std::string((yyvsp[-6].value))); cout << "2d array init" << endl;}
-#line 1829 "parser.tab.c" /* yacc.c:1646  */
+#line 1832 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 158 "parser.y" /* yacc.c:1646  */
+#line 161 "parser.y" /* yacc.c:1646  */
     {(yyval.value) = (yyvsp[0].value); cout << "=" << endl;}
-#line 1835 "parser.tab.c" /* yacc.c:1646  */
+#line 1838 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 159 "parser.y" /* yacc.c:1646  */
+#line 162 "parser.y" /* yacc.c:1646  */
     {(yyval.value) = (yyvsp[0].value); cout << "+=" << endl;}
-#line 1841 "parser.tab.c" /* yacc.c:1646  */
+#line 1844 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 160 "parser.y" /* yacc.c:1646  */
+#line 163 "parser.y" /* yacc.c:1646  */
     {(yyval.value) = (yyvsp[0].value); cout << "-=" << endl;}
-#line 1847 "parser.tab.c" /* yacc.c:1646  */
+#line 1850 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 163 "parser.y" /* yacc.c:1646  */
+#line 166 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); cout << "Location" << endl;}
-#line 1853 "parser.tab.c" /* yacc.c:1646  */
+#line 1856 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 164 "parser.y" /* yacc.c:1646  */
+#line 167 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); cout << "Literal" << endl;}
-#line 1859 "parser.tab.c" /* yacc.c:1646  */
+#line 1862 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 165 "parser.y" /* yacc.c:1646  */
+#line 168 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "add");  cout << "Expr + Expr"<< endl;}
-#line 1865 "parser.tab.c" /* yacc.c:1646  */
+#line 1868 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 166 "parser.y" /* yacc.c:1646  */
+#line 169 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "sub");  cout << "Expr - Expr"<< endl;}
-#line 1871 "parser.tab.c" /* yacc.c:1646  */
+#line 1874 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 167 "parser.y" /* yacc.c:1646  */
+#line 170 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "mult"); cout << "Expr * Expr"<< endl;}
-#line 1877 "parser.tab.c" /* yacc.c:1646  */
+#line 1880 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 168 "parser.y" /* yacc.c:1646  */
+#line 171 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "div");  cout << "Expr / Expr" << endl;}
-#line 1883 "parser.tab.c" /* yacc.c:1646  */
+#line 1886 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 169 "parser.y" /* yacc.c:1646  */
+#line 172 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "mod");  cout << "Expr %% Expr" << endl;}
-#line 1889 "parser.tab.c" /* yacc.c:1646  */
+#line 1892 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 170 "parser.y" /* yacc.c:1646  */
+#line 173 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "leq");  cout << "Expr <= Expr" << endl;}
-#line 1895 "parser.tab.c" /* yacc.c:1646  */
+#line 1898 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 171 "parser.y" /* yacc.c:1646  */
+#line 174 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "geq");  cout << "Expr >= Expr" << endl;}
-#line 1901 "parser.tab.c" /* yacc.c:1646  */
+#line 1904 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 172 "parser.y" /* yacc.c:1646  */
+#line 175 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "gt");   cout << "Expr > Expr" << endl;}
-#line 1907 "parser.tab.c" /* yacc.c:1646  */
+#line 1910 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 173 "parser.y" /* yacc.c:1646  */
+#line 176 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "eq");   cout << "Expr == Expr" << endl;}
-#line 1913 "parser.tab.c" /* yacc.c:1646  */
+#line 1916 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 174 "parser.y" /* yacc.c:1646  */
+#line 177 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "lt");   cout << "Expr < Expr" << endl;}
-#line 1919 "parser.tab.c" /* yacc.c:1646  */
+#line 1922 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 175 "parser.y" /* yacc.c:1646  */
+#line 178 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "neq");  cout << "Expr != Expr" << endl;}
-#line 1925 "parser.tab.c" /* yacc.c:1646  */
+#line 1928 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 176 "parser.y" /* yacc.c:1646  */
+#line 179 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "and");  cout << "Expr and Expr" << endl;}
-#line 1931 "parser.tab.c" /* yacc.c:1646  */
+#line 1934 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 177 "parser.y" /* yacc.c:1646  */
+#line 180 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new BiExprNode((yyvsp[-2].node), (yyvsp[0].node), "or");   cout << "Expr or Expr" << endl;}
-#line 1937 "parser.tab.c" /* yacc.c:1646  */
+#line 1940 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 178 "parser.y" /* yacc.c:1646  */
+#line 181 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[-1].node); cout << "(Expr)" << endl;}
-#line 1943 "parser.tab.c" /* yacc.c:1646  */
+#line 1946 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 179 "parser.y" /* yacc.c:1646  */
+#line 182 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new UniExprNode((yyvsp[0].node),"not"); cout << "not Expr" << endl;}
-#line 1949 "parser.tab.c" /* yacc.c:1646  */
+#line 1952 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 180 "parser.y" /* yacc.c:1646  */
+#line 183 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new UniExprNode((yyvsp[0].node), "uminus"); cout << "- Expr" << endl;}
-#line 1955 "parser.tab.c" /* yacc.c:1646  */
+#line 1958 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 181 "parser.y" /* yacc.c:1646  */
+#line 184 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); cout << "MethodCall" << endl;}
-#line 1961 "parser.tab.c" /* yacc.c:1646  */
+#line 1964 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 184 "parser.y" /* yacc.c:1646  */
+#line 187 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node);   cout << "ID" << endl;}
-#line 1967 "parser.tab.c" /* yacc.c:1646  */
+#line 1970 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 185 "parser.y" /* yacc.c:1646  */
+#line 188 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new OneDArray((yyvsp[-3].node), (yyvsp[-1].node)) ;  cout << "1D Access" << endl;}
-#line 1973 "parser.tab.c" /* yacc.c:1646  */
+#line 1976 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 186 "parser.y" /* yacc.c:1646  */
+#line 189 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = new TwoDArray((yyvsp[-5].node),(yyvsp[-3].node),(yyvsp[-1].node)); cout << "2D Access" << endl;}
-#line 1979 "parser.tab.c" /* yacc.c:1646  */
+#line 1982 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 189 "parser.y" /* yacc.c:1646  */
+#line 192 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "INTL" << endl; }
-#line 1985 "parser.tab.c" /* yacc.c:1646  */
+#line 1988 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 190 "parser.y" /* yacc.c:1646  */
+#line 193 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "TRUE" << endl; }
-#line 1991 "parser.tab.c" /* yacc.c:1646  */
+#line 1994 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 191 "parser.y" /* yacc.c:1646  */
+#line 194 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "FALSE" << endl;}
-#line 1997 "parser.tab.c" /* yacc.c:1646  */
+#line 2000 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 192 "parser.y" /* yacc.c:1646  */
+#line 195 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "CHAR" << endl; }
-#line 2003 "parser.tab.c" /* yacc.c:1646  */
+#line 2006 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 193 "parser.y" /* yacc.c:1646  */
+#line 196 "parser.y" /* yacc.c:1646  */
     {(yyval.node) = (yyvsp[0].node); cout << "UINT" << endl; }
-#line 2009 "parser.tab.c" /* yacc.c:1646  */
+#line 2012 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 196 "parser.y" /* yacc.c:1646  */
+#line 199 "parser.y" /* yacc.c:1646  */
     {(yyval.value) = (yyvsp[0].value); cout << "int" << endl;}
-#line 2015 "parser.tab.c" /* yacc.c:1646  */
+#line 2018 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 197 "parser.y" /* yacc.c:1646  */
+#line 200 "parser.y" /* yacc.c:1646  */
     {(yyval.value) = (yyvsp[0].value); cout << "uint" << endl;}
-#line 2021 "parser.tab.c" /* yacc.c:1646  */
+#line 2024 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 85:
-#line 198 "parser.y" /* yacc.c:1646  */
+#line 201 "parser.y" /* yacc.c:1646  */
     {(yyval.value) = (yyvsp[0].value); cout << "bool" << endl;}
-#line 2027 "parser.tab.c" /* yacc.c:1646  */
+#line 2030 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 199 "parser.y" /* yacc.c:1646  */
+#line 202 "parser.y" /* yacc.c:1646  */
     {(yyval.value) = (yyvsp[0].value); cout << "char" << endl;}
-#line 2033 "parser.tab.c" /* yacc.c:1646  */
+#line 2036 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 87:
-#line 201 "parser.y" /* yacc.c:1646  */
+#line 204 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new MethodCallNode((yyvsp[-2].node)); }
-#line 2039 "parser.tab.c" /* yacc.c:1646  */
+#line 2042 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 88:
-#line 202 "parser.y" /* yacc.c:1646  */
+#line 205 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new MethodCallNode((yyvsp[-3].node), (yyvsp[-1].node)); }
-#line 2045 "parser.tab.c" /* yacc.c:1646  */
+#line 2048 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 89:
-#line 205 "parser.y" /* yacc.c:1646  */
+#line 208 "parser.y" /* yacc.c:1646  */
     { (yyval.node) = new ListExprsNode((yyvsp[0].node)); cout << "ListOfExpr" << endl;}
-#line 2051 "parser.tab.c" /* yacc.c:1646  */
+#line 2054 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 206 "parser.y" /* yacc.c:1646  */
+#line 209 "parser.y" /* yacc.c:1646  */
     {(yyval.node)->pb((yyvsp[0].node)); cout << "ListOfExpr" << endl;}
-#line 2057 "parser.tab.c" /* yacc.c:1646  */
+#line 2060 "parser.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2061 "parser.tab.c" /* yacc.c:1646  */
+#line 2064 "parser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2285,7 +2288,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 209 "parser.y" /* yacc.c:1906  */
+#line 212 "parser.y" /* yacc.c:1906  */
 
 
 int main(int argc, char **argv)

@@ -6,6 +6,7 @@ using namespace std;
 void genError(string a)
 {
     cout << a << endl;
+    exit(0);
 }
 
 void invalidTypeError()

@@ -63,6 +63,9 @@ FinalNode : File	{
 												cout << "------Symbol_table------" << endl;
 												global_table.print();
 												cout << "------------------------" << endl;
+												cout << "------Array_table------" << endl;
+												global_table.array_print();
+												cout << "------------------------" << endl;
 												cout << "------Function_Table------" << endl;
 												method_table.print();
 												cout << "------------------------" << endl;

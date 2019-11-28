@@ -421,6 +421,7 @@ class Symbol_table
 {
 public:
     std::map <string, node> table;
+    std::map <string, pair<int, node*>> array_table; 
     Symbol_table()
     {}
     //Array table
@@ -429,6 +430,14 @@ public:
         map<string,node>::iterator it;
         it = table.find(val);
         if(it == table.end())
+        {return false;}
+        return true;
+    }
+    bool check_arr(string val)
+    {
+        map<string,pair<int, node*>>::iterator it;
+        it = array_table.find(val);
+        if(it == array_table.end())
         {return false;}
         return true;
     }
@@ -445,6 +454,31 @@ public:
         table.insert(pair<string, node>(var_name,get_empty_node(ty)));
         }
     }
+    void create_array(string var_name,var_type ty, int array_size)
+    {
+        if(array_size == 0){genError("Array of size 0 initializes");}
+
+        map<string,pair<int,node*>>::iterator it;
+        it = array_table.find(var_name);
+        if (it != array_table.end())
+        {
+            genError("Array being reinitialized");
+        }
+        else
+        {   
+            node * array_struct = new node[array_size];
+            for(int i=0; i < array_size; i++) 
+            {
+                array_struct[i].type = ty;
+                array_struct[i].i = 0;
+            }  
+            array_table.insert(pair<string, pair<int,node*>>
+                    (var_name,
+                    (pair<int,node*>(array_size,array_struct)
+                    )
+                    ));
+        }
+    }
     node get_var(string var_name)
     {
         map<string,node>::iterator it;
@@ -458,13 +492,30 @@ public:
             return it->second;
         }
     }
+    node get_array(string var_name, int pos)
+    {
+        map<string,pair<int,node*>>::iterator it;
+        it = array_table.find(var_name);
+        if (it == array_table.end())
+        {
+            genError("Uninitialized Variable Accessed");
+        }
+        else
+        {
+            if(pos >= it->second.first)
+            {
+                genError("Array bounds exceeded");
+            }
+            return it->second.second[pos];
+        }
+    }
     node update_var(string var_name,node value)
     {
         map<string,node>::iterator it;
         it = table.find(var_name);
         if (it == table.end())
         {
-            genError("Accessing an uninitialized variable");
+            genError("Accessing an uninitialized array");
         }
         else
         {
@@ -472,11 +523,38 @@ public:
             return this->get_var(var_name);
         }
     }
+    node update_array(string var_name,node value, int pos)
+    {
+        map<string,pair<int,node*>>::iterator it;
+        it = array_table.find(var_name);
+        if (it == array_table.end())
+        {
+            genError("Accessing an uninitialized array");
+        }
+        else
+        {
+            if(pos >= it->second.first)
+            {
+                genError("Array index out of binds");
+            }
+            it->second.second[pos] = value;
+            return this->get_array(var_name,pos);
+        }
+    }
     void print()
     {
         for (auto& x: table)
         {
             std::cout << x.first << ": " << x.second << '\n';
+        }
+    }
+    void array_print()
+    {
+        for (auto& x: array_table)
+        {
+            std::cout << x.first << ": ";
+            for(int i = 0; i < x.second.first;i++){cout << x.second.second[i];} 
+            cout << '\n';
         }
     }
     void create_and_update(string var_name,node value)
@@ -745,8 +823,15 @@ public:
         id   = inp;
         row =  exp;
     }
-
-
+    virtual node interpret();
+    virtual void visit()
+    {
+        cout << "OneDArray :: " << endl;
+        id->visit();
+        cout << "[";
+        row->visit();
+        cout << "]";
+    }
 };
 
 class TwoDArray : public ASTnode
@@ -873,6 +958,7 @@ public:
         cout << "]";
     }
 
+    virtual node interpret();
   //   virtual out_type interpret()
   //   {
   //     out_type ret;
